@@ -1,7 +1,9 @@
+import type { ReactNode } from "react"
+
 import { ThemeProvider } from "next-themes"
 import { Provider } from "./provider"
+
 import Head from "./head"
-import type { ReactNode } from "react"
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (

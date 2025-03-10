@@ -13,7 +13,7 @@ export default function Head() {
             <meta name="theme-color" content={"pageBackground._dark"} media="(prefers-color-scheme: dark)" />
 
             {/* Favicon & Icons */}
-            <link rel="icon" href="/static/favicon.ico" sizes="any" />
+            <link rel="icon" href="/static/favicon.svg" sizes="any" />
 
             {/* Title & Meta Description */}
             <title>{siteName}</title>
