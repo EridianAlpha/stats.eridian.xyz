@@ -20,7 +20,7 @@ export function Provider(props: ColorModeProviderProps) {
             {hydrated ? (
                 <ColorModeProvider {...props} />
             ) : (
-                <VStack minH="70vh" justifyContent={"center"} alignItems={"center"} fontWeight={"bold"}>
+                <VStack minH="100vh" justifyContent={"center"} alignItems={"center"} fontWeight={"bold"}>
                     <Spinner />
                     <Text>Loading stats.eridian.xyz</Text>
                 </VStack>
