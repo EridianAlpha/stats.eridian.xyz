@@ -66,8 +66,8 @@ function DateLabel({
                     zIndex={0}
                     justifyContent="space-between"
                 >
-                    <Box bg="white" minW={"2px"} h={"100%"} />
-                    <Box bg="white" w={"2px"} h={"100%"} />
+                    <Box bg="textColor" minW={"2px"} h={"100%"} />
+                    <Box bg="textColor" w={"2px"} h={"100%"} />
                 </HStack>
             )}
 
