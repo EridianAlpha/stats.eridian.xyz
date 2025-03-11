@@ -1,7 +1,6 @@
 "use client"
 
-import { useState } from "react"
-
+import { useState, Dispatch, SetStateAction } from "react"
 import { Grid, Box, Text, VStack, HStack } from "@chakra-ui/react"
 
 const data = Array.from({ length: 20 }, (_, i) => {
@@ -14,7 +13,17 @@ const data = Array.from({ length: 20 }, (_, i) => {
     }
 })
 
-function DateLabel({ item, index }: { item: (typeof data)[number]; index: number }) {
+function DateLabel({
+    item,
+    index,
+    selectedDate,
+    setSelectedDate,
+}: {
+    item: (typeof data)[number]
+    index: number
+    selectedDate: string
+    setSelectedDate: Dispatch<SetStateAction<string>>
+}) {
     const [isHovered, setIsHovered] = useState(false)
 
     return (
@@ -26,19 +35,26 @@ function DateLabel({ item, index }: { item: (typeof data)[number]; index: number
                 py={"2px"}
                 borderRadius={"full"}
                 zIndex={1}
-                _hover={{
-                    border: "2px solid white",
-                }}
+                border={isHovered || selectedDate == item.date ? "2px solid" : "none"}
+                borderColor={isHovered || selectedDate == item.date ? "textColor" : "transparent"}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    if (selectedDate == item.date) {
+                        setSelectedDate("")
+                    } else {
+                        setSelectedDate(item.date)
+                    }
+                }}
             >
                 <Text fontSize="sm" fontWeight="bold" whiteSpace="nowrap">
                     {item.formattedDate}
                 </Text>
             </Box>
 
-            {isHovered && (
+            {(isHovered || selectedDate == item.date) && (
                 <HStack
                     gap={0}
                     position="absolute"
@@ -46,22 +62,43 @@ function DateLabel({ item, index }: { item: (typeof data)[number]; index: number
                     left="50%"
                     transform="translateX(-50%)"
                     h="100vh"
-                    w="12px"
+                    w="16px"
                     zIndex={0}
                     justifyContent="space-between"
-                    bg="blue"
                 >
                     <Box bg="white" minW={"2px"} h={"100%"} />
                     <Box bg="white" w={"2px"} h={"100%"} />
                 </HStack>
             )}
 
-            <Box bg="pageBackground" position="absolute" top="10px" left="50%" transform="translateX(-50%)" w={"8px"} h={"100vh"} zIndex={2} />
+            <Box
+                bg="pageBackground"
+                position="absolute"
+                top="10px"
+                left="50%"
+                transform="translateX(-50%)"
+                w={"12px"}
+                h={"100vh"}
+                zIndex={2}
+                cursor={"pointer"}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    if (selectedDate == item.date) {
+                        setSelectedDate("")
+                    } else {
+                        setSelectedDate(item.date)
+                    }
+                }}
+            />
         </Box>
     )
 }
 
 export default function StatsContainer() {
+    const [selectedDate, setSelectedDate] = useState("")
+
     return (
         <Grid
             templateColumns={`repeat(22, 1fr)`}
@@ -73,6 +110,7 @@ export default function StatsContainer() {
             gap={"4px"}
             position="relative"
             overflow="hidden"
+            onClick={() => setSelectedDate("")}
         >
             {/* Empty first column for alignment */}
             <Box />
@@ -80,7 +118,11 @@ export default function StatsContainer() {
 
             {/* First row: Odd index dates */}
             {data.map((item, index) =>
-                index % 2 === 0 ? <DateLabel key={item.date} item={item} index={index} /> : <Box key={`empty-${item.date}`} />,
+                index % 2 === 0 ? (
+                    <DateLabel key={item.date} item={item} index={index} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                ) : (
+                    <Box key={`empty-${item.date}`} />
+                ),
             )}
             {/* Empty first column for alignment */}
             <Box />
@@ -88,7 +130,11 @@ export default function StatsContainer() {
 
             {/* Second row: Even index dates */}
             {data.map((item, index) =>
-                index % 2 !== 0 ? <DateLabel key={item.date} item={item} index={index} /> : <Box key={`empty-${item.date}`} />,
+                index % 2 !== 0 ? (
+                    <DateLabel key={item.date} item={item} index={index} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                ) : (
+                    <Box key={`empty-${item.date}`} />
+                ),
             )}
             {/* Section Header Row */}
             <Box fontWeight="bold" textAlign="left" whiteSpace="nowrap" color={"blue"}>
@@ -104,7 +150,7 @@ export default function StatsContainer() {
             <Box fontWeight="bold" textAlign="center" whiteSpace="nowrap">
                 eridian.xyz
             </Box>
-            <Box fontWeight="bold" textAlign="center" whiteSpace="nowrap" textAlign="center" w={"100%"}>
+            <Box fontWeight="bold" whiteSpace="nowrap" textAlign="center" w={"100%"}>
                 👀
             </Box>
 
