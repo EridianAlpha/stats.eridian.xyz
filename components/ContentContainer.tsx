@@ -10,14 +10,14 @@ import ChartContainer from "./ChartContainer"
 import Footer from "../components/Footer"
 
 export default function ContentContainer() {
-    const [selectedDate, setSelectedDate] = useState("")
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
     return (
-        <VStack minH="100vh" onClick={() => setSelectedDate("")}>
+        <VStack minH="100vh" onClick={() => setSelectedIndex(null)}>
             <Header />
-            <VStack alignItems={"start"} justifyContent={"center"} gap={5} w={"100%"} maxW="1400px" py={10} borderRadius={"20px"}>
+            <VStack alignItems={"start"} justifyContent={"center"} gap={5} w={"100%"} maxW="1400px" py={2} borderRadius={"20px"}>
                 {/* <ChartContainer /> */}
-                <StatsContainer selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                <StatsContainer selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
             </VStack>
             <Box flexGrow={1} />
             <Footer />

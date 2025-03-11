@@ -4,7 +4,7 @@ import { useState } from "react"
 import StatsContainer from "../../components/StatsContainer"
 
 export default function EmbedPage() {
-    const [selectedDate, setSelectedDate] = useState("")
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
-    return <StatsContainer selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+    return <StatsContainer selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
 }

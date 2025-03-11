@@ -40,14 +40,14 @@ const data = generateSampleData()
 function DateLabel({
     item,
     index,
-    selectedDate,
-    setSelectedDate,
+    selectedIndex,
+    setSelectedIndex,
     containerHeight,
 }: {
     item: (typeof data)[number]
     index: number
-    selectedDate: string
-    setSelectedDate: Dispatch<SetStateAction<string>>
+    selectedIndex: number | null
+    setSelectedIndex: Dispatch<SetStateAction<number | null>>
     containerHeight: number
 }) {
     const [isHovered, setIsHovered] = useState(false)
@@ -67,17 +67,17 @@ function DateLabel({
                 bg="blueDark"
                 px={2}
                 borderRadius={"full"}
-                border={isHovered || selectedDate == item.date ? "2px solid" : "none"}
-                borderColor={isHovered || selectedDate == item.date ? "textColor" : "transparent"}
+                border={isHovered || selectedIndex == index ? "2px solid" : "none"}
+                borderColor={isHovered || selectedIndex == index ? "textColor" : "transparent"}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={(e) => {
                     e.stopPropagation()
-                    if (selectedDate == item.date) {
-                        setSelectedDate("")
+                    if (selectedIndex == index) {
+                        setSelectedIndex(null)
                     } else {
-                        setSelectedDate(item.date)
+                        setSelectedIndex(index)
                     }
                 }}
                 transform={index === 0 ? "translateX(-10px)" : "none"}
@@ -96,14 +96,14 @@ function DateLabel({
                 </Text>
             </Box>
 
-            {(isHovered || selectedDate == item.date) && (
+            {(isHovered || selectedIndex == index) && (
                 <HStack
                     gap={0}
                     position="absolute"
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 70 : 100)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 60 : 90)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -120,21 +120,81 @@ function DateLabel({
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 70 : 100)}px`}
+                h={`${containerHeight - (index % 2 === 0 ? 60 : 90)}px`}
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
                 onClick={(e) => {
                     e.stopPropagation()
-                    if (selectedDate == item.date) {
-                        setSelectedDate("")
+                    if (selectedIndex == index) {
+                        setSelectedIndex(null)
                     } else {
-                        setSelectedDate(item.date)
+                        setSelectedIndex(index)
                     }
                 }}
             />
         </Box>
+    )
+}
+
+function EmptyRow({
+    count,
+    labelWidth,
+    firstRow = false,
+    sectionEnd = false,
+    height,
+    selectedIndex = null,
+    setSelectedIndex = () => {},
+}: {
+    count: number
+    labelWidth: string
+    firstRow?: boolean
+    sectionEnd?: boolean
+    height?: string
+    selectedIndex?: number | null
+    setSelectedIndex?: Dispatch<SetStateAction<number | null>>
+}) {
+    return (
+        <>
+            {Array.from({ length: count }).map((_, index) => {
+                if (index === 0 || index === 1) {
+                    return (
+                        <Box
+                            key={`header-empty-${index}`}
+                            h={height}
+                            position="sticky"
+                            left={index === 0 ? 0 : labelWidth}
+                            bg="contentBackground"
+                            zIndex={6}
+                            borderTopRightRadius={index === 1 && firstRow ? "10px" : "0px"}
+                        />
+                    )
+                } else {
+                    if (sectionEnd) {
+                        return (
+                            <Box key={`header-empty-${index}`} h="12px" position="relative" onClick={() => setSelectedIndex(index)}>
+                                <Box
+                                    position="absolute"
+                                    top="0"
+                                    left="50%"
+                                    transform="translate(-50%, -50%)"
+                                    w="14px"
+                                    h="18px"
+                                    borderRadius="full"
+                                    bg="blueDark"
+                                    border={selectedIndex == index ? "2px solid" : "none"}
+                                />
+                                {selectedIndex}
+                                {index}
+                            </Box>
+                        )
+                    } else {
+                        return <Box key={`header-empty-${index}`} h="12px" position="relative" bg="none" />
+                    }
+                }
+            })}
+        </>
     )
 }
 
@@ -148,29 +208,12 @@ function StatsRow({
     title: string
     emoji: string
     data: { date: string; value: string }[]
-    labelWidth?: string
+    labelWidth: string
     firstRow?: boolean
 }) {
     return (
         <>
-            {/* Empty header boxes */}
-            {Array.from({ length: data.length + 2 }).map((_, index) => {
-                if (index === 0 || index === 1) {
-                    return (
-                        <Box
-                            key={`header-empty-${index}`}
-                            h="12px"
-                            position="sticky"
-                            left={index === 0 ? 0 : labelWidth}
-                            bg="contentBackground"
-                            zIndex={6}
-                            borderTopRightRadius={index === 1 && firstRow ? "10px" : "0px"}
-                        />
-                    )
-                } else {
-                    return <Box key={`header-empty-${index}`} h="12px" position="relative" bg="none" />
-                }
-            })}
+            <EmptyRow count={data.length + 2} labelWidth={labelWidth} firstRow={firstRow} />
             {/* First column for name label */}
             <Box fontWeight="bold" whiteSpace="nowrap" position="sticky" left={0} bg="contentBackground" zIndex={6} px={5} minW={labelWidth}>
                 {title}
@@ -211,11 +254,11 @@ function StatsRow({
 }
 
 export default function StatsContainer({
-    selectedDate,
-    setSelectedDate,
+    selectedIndex,
+    setSelectedIndex,
 }: {
-    selectedDate: string
-    setSelectedDate: Dispatch<SetStateAction<string>>
+    selectedIndex: number | null
+    setSelectedIndex: Dispatch<SetStateAction<number | null>>
 }) {
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0)
@@ -250,8 +293,8 @@ export default function StatsContainer({
                             key={item.date}
                             item={item}
                             index={index}
-                            selectedDate={selectedDate}
-                            setSelectedDate={setSelectedDate}
+                            selectedIndex={selectedIndex}
+                            setSelectedIndex={setSelectedIndex}
                             containerHeight={containerHeight}
                         />
                     ) : (
@@ -284,8 +327,8 @@ export default function StatsContainer({
                             key={item.date}
                             item={item}
                             index={index}
-                            selectedDate={selectedDate}
-                            setSelectedDate={setSelectedDate}
+                            selectedIndex={selectedIndex}
+                            setSelectedIndex={setSelectedIndex}
                             containerHeight={containerHeight}
                         />
                     ) : (
@@ -303,8 +346,10 @@ export default function StatsContainer({
                         firstRow={index === 0}
                     />
                 ))}
+                <EmptyRow count={data.length + 2} labelWidth={labelWidth} sectionEnd={true} />
+                <EmptyRow count={data.length + 2} labelWidth={labelWidth} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
+                <Text>Selected Index: {selectedIndex}</Text>
             </Grid>
-            <Box w={`${containerWidth}px`} h={"15px"} bg={"contentBackground"} zIndex={6} position="relative" bottom={0} />
         </Box>
     )
 }
