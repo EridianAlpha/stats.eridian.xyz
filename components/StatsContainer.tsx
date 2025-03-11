@@ -6,15 +6,36 @@ import { Grid, Box, Text, VStack, HStack } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons"
 
-const data = Array.from({ length: 30 }, (_, i) => {
-    const date = new Date()
-    date.setDate(date.getDate() - i)
-    return {
-        date: date.toISOString().split("T")[0], // Format as YYYY-MM-DD
-        formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}`,
-        value: "999k", // Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 1000),
-    }
-})
+const formatNumber = (num: number): string => {
+    if (num < 1000) return num.toString()
+    if (num < 10000) return (num / 1000).toFixed(1) + "k"
+    if (num < 1000000) return Math.floor(num / 1000) + "k"
+    return (num / 1000000).toFixed(1) + "m"
+}
+
+const generateSampleData = () => {
+    return Array.from({ length: 30 }, (_, i) => {
+        const date = new Date()
+        date.setDate(date.getDate() - i)
+        const randomValue = Math.random() < 0.3 ? 0 : Math.floor(Math.random() * 2000000)
+        return {
+            date: date.toISOString().split("T")[0],
+            formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}`,
+            value: randomValue === 0 ? "0" : formatNumber(randomValue),
+        }
+    })
+}
+
+const websiteConfigs = [
+    { title: "💻 eridian.xyz", emoji: "👀" },
+    { title: "📖 docs.eridian.xyz", emoji: "👀" },
+    { title: "📋 staking.directory", emoji: "👀" },
+    { title: "⛺️ settlers.eridian.xyz", emoji: "👀" },
+    { title: "🏖️ pool.eridian.xyz", emoji: "👀" },
+    { title: "💰 ssvrewards.com", emoji: "👀" },
+]
+
+const data = generateSampleData()
 
 function DateLabel({
     item,
@@ -82,7 +103,7 @@ function DateLabel({
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 70 : 100)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -99,7 +120,7 @@ function DateLabel({
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
+                h={`${containerHeight - (index % 2 === 0 ? 70 : 100)}px`}
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
@@ -214,7 +235,7 @@ export default function StatsContainer({
         return () => window.removeEventListener("resize", updateDimensions)
     }, [])
 
-    const labelWidth = "160px"
+    const labelWidth = "200px"
     return (
         <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
             <Grid templateColumns={`repeat(${data.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
@@ -272,8 +293,16 @@ export default function StatsContainer({
                     ),
                 )}
 
-                <StatsRow title="eridian.xyz" emoji="👀" data={data} labelWidth={labelWidth} firstRow={true} />
-                <StatsRow title="staking.directory" emoji="👀" data={data} labelWidth={labelWidth} />
+                {websiteConfigs.map((config, index) => (
+                    <StatsRow
+                        key={config.title}
+                        title={config.title}
+                        emoji={config.emoji}
+                        data={generateSampleData()}
+                        labelWidth={labelWidth}
+                        firstRow={index === 0}
+                    />
+                ))}
             </Grid>
             <Box w={`${containerWidth}px`} h={"15px"} bg={"contentBackground"} zIndex={6} position="relative" bottom={0} />
         </Box>
