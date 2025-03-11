@@ -8,7 +8,7 @@ const data = Array.from({ length: 20 }, (_, i) => {
     date.setDate(date.getDate() - i)
     return {
         date: date.toISOString().split("T")[0], // Format as YYYY-MM-DD
-        formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })} ${date.getFullYear().toString().slice(-2)}`,
+        formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}`,
         value: Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 1000),
     }
 })
@@ -27,7 +27,7 @@ function DateLabel({
     const [isHovered, setIsHovered] = useState(false)
 
     return (
-        <Box key={`date-${item.date}`} position="relative" display="flex" justifyContent="center" alignItems="center" m={4} fontFamily={"monospace"}>
+        <Box key={`date-${item.date}`} position="relative" display="flex" justifyContent="center" alignItems="center" my={4} fontFamily={"monospace"}>
             <Box
                 position="absolute"
                 bg="pageBackground"
@@ -62,7 +62,7 @@ function DateLabel({
                     left="50%"
                     transform="translateX(-50%)"
                     h="100vh"
-                    w="16px"
+                    w="14px"
                     zIndex={0}
                     justifyContent="space-between"
                 >
@@ -77,7 +77,7 @@ function DateLabel({
                 top="10px"
                 left="50%"
                 transform="translateX(-50%)"
-                w={"12px"}
+                w={"10px"}
                 h={"100vh"}
                 zIndex={2}
                 cursor={"pointer"}
@@ -104,10 +104,9 @@ export default function StatsContainer() {
             templateColumns={`repeat(22, 1fr)`}
             bg={"contentBackground"}
             py={3}
-            pl={5}
-            pr={8}
+            px={5}
             borderRadius={"20px"}
-            gap={"4px"}
+            gap={"0px"}
             position="relative"
             overflow="hidden"
             onClick={() => setSelectedDate("")}
@@ -159,11 +158,13 @@ export default function StatsContainer() {
                 <VStack
                     key={item.date}
                     bg={item.value === 0 ? "gray" : "green"}
-                    borderRadius={"8px"}
+                    borderRadius={"full"}
                     textAlign="center"
                     position="relative"
                     justifyContent={"center"}
                     zIndex={2}
+                    mx={"5px"}
+                    minW={"40px"}
                 >
                     <Text fontFamily={"monospace"} fontWeight={"bold"}>
                         {item.value === 0 ? "" : item.value}
