@@ -68,7 +68,7 @@ function DateLabel({
                 <Text fontSize="sm" fontWeight="bold" whiteSpace="nowrap" display="flex" justifyContent="flex-end">
                     {index === 0 && (
                         <Text as="span" mr={2}>
-                            <FontAwesomeIcon icon={faCalendarDay} size={"lg"} />
+                            <FontAwesomeIcon icon={faCalendarDay} />
                         </Text>
                     )}
                     {item.formattedDate}
@@ -82,7 +82,7 @@ function DateLabel({
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 40 : 80)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -99,7 +99,7 @@ function DateLabel({
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 40 : 80)}px`}
+                h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
@@ -114,6 +114,78 @@ function DateLabel({
                 }}
             />
         </Box>
+    )
+}
+
+function StatsRow({
+    title,
+    emoji,
+    data,
+    labelWidth,
+    firstRow = false,
+}: {
+    title: string
+    emoji: string
+    data: { date: string; value: string }[]
+    labelWidth?: string
+    firstRow?: boolean
+}) {
+    return (
+        <>
+            {/* Empty header boxes */}
+            {Array.from({ length: data.length + 2 }).map((_, index) => {
+                if (index === 0 || index === 1) {
+                    return (
+                        <Box
+                            key={`header-empty-${index}`}
+                            h="12px"
+                            position="sticky"
+                            left={index === 0 ? 0 : labelWidth}
+                            bg="contentBackground"
+                            zIndex={6}
+                            borderTopRightRadius={index === 1 && firstRow ? "10px" : "0px"}
+                        />
+                    )
+                } else {
+                    return <Box key={`header-empty-${index}`} h="12px" position="relative" bg="none" />
+                }
+            })}
+            {/* First column for name label */}
+            <Box fontWeight="bold" whiteSpace="nowrap" position="sticky" left={0} bg="contentBackground" zIndex={6} px={5} minW={labelWidth}>
+                {title}
+            </Box>
+            <Box
+                fontWeight="bold"
+                whiteSpace="nowrap"
+                textAlign="center"
+                minW="40px"
+                position="sticky"
+                left={labelWidth}
+                bg="contentBackground"
+                zIndex={6}
+            >
+                {emoji}
+            </Box>
+
+            {/* Data Boxes */}
+            {data.map((item) => (
+                <VStack
+                    key={item.date}
+                    bg={item.value === "0" ? "gray" : "green"}
+                    borderRadius="full"
+                    textAlign="center"
+                    position="relative"
+                    justifyContent="center"
+                    zIndex={5}
+                    mx="5px"
+                    minW="40px"
+                >
+                    <Text fontFamily="monospace" fontWeight="bold">
+                        {item.value === "0" ? "" : item.value}
+                    </Text>
+                </VStack>
+            ))}
+        </>
     )
 }
 
@@ -142,7 +214,7 @@ export default function StatsContainer({
         return () => window.removeEventListener("resize", updateDimensions)
     }, [])
 
-    const labelWidth = "150px"
+    const labelWidth = "160px"
     return (
         <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
             <Grid templateColumns={`repeat(${data.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
@@ -166,7 +238,22 @@ export default function StatsContainer({
                     ),
                 )}
                 {/* Empty first column for alignment */}
-                <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} />
+                <VStack
+                    fontWeight="bold"
+                    textAlign="left"
+                    whiteSpace="nowrap"
+                    color={"blue"}
+                    fontSize={"xl"}
+                    position="sticky"
+                    left={0}
+                    bg={"contentBackground"}
+                    zIndex={10}
+                    px={5}
+                    justifyContent="end"
+                    alignItems="start"
+                >
+                    Websites
+                </VStack>
                 <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
 
                 {/* Second row: Even index dates */}
@@ -184,65 +271,9 @@ export default function StatsContainer({
                         <Box key={`empty-${item.date}`} />
                     ),
                 )}
-                {/* Section Header Row */}
-                <Box
-                    fontWeight="bold"
-                    textAlign="left"
-                    whiteSpace="nowrap"
-                    color={"blue"}
-                    fontSize={"xl"}
-                    position="sticky"
-                    left={0}
-                    bg={"contentBackground"}
-                    zIndex={10}
-                    px={5}
-                    maxH={"10px"}
-                >
-                    <Text position={"relative"} top={"-25px"}>
-                        Websites
-                    </Text>
-                </Box>
-                <Box position="sticky" left={labelWidth} zIndex={5} bg={"contentBackground"} borderTopRightRadius={"20px"} />
 
-                {/* Empty header boxes */}
-                {data.map((item, index) => (
-                    <Box key={`header-empty-${index}`} />
-                ))}
-                {/* First column for name label */}
-                <Box fontWeight="bold" whiteSpace="nowrap" position="sticky" left={0} bg={"contentBackground"} zIndex={6} px={5} minW={labelWidth}>
-                    eridian.xyz
-                </Box>
-                <Box
-                    fontWeight="bold"
-                    whiteSpace="nowrap"
-                    textAlign="center"
-                    minW={"40px"}
-                    position="sticky"
-                    left={labelWidth}
-                    bg={"contentBackground"}
-                    zIndex={6}
-                >
-                    👀
-                </Box>
-
-                {/* Third row: Data boxes */}
-                {data.map((item) => (
-                    <VStack
-                        key={item.date}
-                        bg={item.value === "0" ? "gray" : "green"}
-                        borderRadius={"full"}
-                        textAlign="center"
-                        position="relative"
-                        justifyContent={"center"}
-                        zIndex={5}
-                        mx={"5px"}
-                        minW={"40px"}
-                    >
-                        <Text fontFamily={"monospace"} fontWeight={"bold"}>
-                            {item.value === "0" ? "" : item.value}
-                        </Text>
-                    </VStack>
-                ))}
+                <StatsRow title="eridian.xyz" emoji="👀" data={data} labelWidth={labelWidth} firstRow={true} />
+                <StatsRow title="staking.directory" emoji="👀" data={data} labelWidth={labelWidth} />
             </Grid>
             <Box w={`${containerWidth}px`} h={"15px"} bg={"contentBackground"} zIndex={6} position="relative" bottom={0} />
         </Box>
