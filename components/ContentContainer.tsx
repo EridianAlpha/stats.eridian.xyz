@@ -15,7 +15,7 @@ export default function ContentContainer() {
     return (
         <VStack minH="100vh" onClick={() => setSelectedDate("")}>
             <Header />
-            <VStack alignItems={"center"} gap={5} w={"100%"} maxW="1400px" justifyContent={"center"} py={10} borderRadius={"20px"}>
+            <VStack alignItems={"start"} justifyContent={"center"} gap={5} w={"100%"} maxW="1400px" py={10} borderRadius={"20px"}>
                 {/* <ChartContainer /> */}
                 <StatsContainer selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
             </VStack>
