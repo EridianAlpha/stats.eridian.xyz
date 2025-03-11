@@ -48,10 +48,14 @@ export default function EmptyRow({
                                     top="0"
                                     left="50%"
                                     transform="translate(-50%, -50%)"
-                                    w="14px"
+                                    w={
+                                        (selectedIndex !== null && selectedIndex + 2 === index) || (hoverIndex !== null && hoverIndex + 2 === index)
+                                            ? "14px"
+                                            : "12px"
+                                    }
                                     h="18px"
                                     borderRadius="full"
-                                    bg="blueDark"
+                                    bg="pageBackground"
                                     border={
                                         (selectedIndex !== null && selectedIndex + 2 === index) || (hoverIndex !== null && hoverIndex + 2 === index)
                                             ? "2px solid"

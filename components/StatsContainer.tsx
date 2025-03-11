@@ -19,14 +19,13 @@ export default function StatsContainer({
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0)
     const [containerWidth, setContainerWidth] = useState(0)
-    const [data, setData] = useState(() => generateSampleData())
     const [websiteConfigs] = useState([
-        { title: "💻 eridian.xyz", emoji: "👀" },
-        { title: "📖 docs.eridian.xyz", emoji: "👀" },
-        { title: "📋 staking.directory", emoji: "👀" },
-        { title: "⛺️ settlers.eridian.xyz", emoji: "👀" },
-        { title: "🏖️ pool.eridian.xyz", emoji: "👀" },
-        { title: "💰 ssvrewards.com", emoji: "👀" },
+        { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData() },
+        { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData() },
+        { title: "📋 staking.directory", emoji: "👀", data: generateSampleData() },
+        { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData() },
+        { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData() },
+        { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData() },
     ])
 
     useEffect(() => {
@@ -44,15 +43,18 @@ export default function StatsContainer({
     }, [])
 
     const labelWidth = "200px"
+    // Use the first website's data for the structure since all should have the same dates
+    const structureData = websiteConfigs[0].data
+
     return (
         <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
-            <Grid templateColumns={`repeat(${data.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
+            <Grid templateColumns={`repeat(${structureData.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
                 {/* Empty first column for alignment */}
                 <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} />
                 <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
 
                 {/* First row: Odd index dates */}
-                {data.map((item, index) =>
+                {structureData.map((item, index) =>
                     index % 2 === 0 ? (
                         <DateLabel
                             key={item.date}
@@ -88,7 +90,7 @@ export default function StatsContainer({
                 <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
 
                 {/* Second row: Even index dates */}
-                {data.map((item, index) =>
+                {structureData.map((item, index) =>
                     index % 2 !== 0 ? (
                         <DateLabel
                             key={item.date}
@@ -110,7 +112,7 @@ export default function StatsContainer({
                         key={config.title}
                         title={config.title}
                         emoji={config.emoji}
-                        data={data}
+                        data={config.data}
                         labelWidth={labelWidth}
                         firstRow={index === 0}
                         setSelectedIndex={setSelectedIndex}
@@ -120,7 +122,7 @@ export default function StatsContainer({
                     />
                 ))}
                 <EmptyRow
-                    count={data.length + 2}
+                    count={structureData.length + 2}
                     labelWidth={labelWidth}
                     sectionEnd={true}
                     selectedIndex={selectedIndex}
@@ -128,7 +130,7 @@ export default function StatsContainer({
                     hoverIndex={hoverIndex}
                     setHoverIndex={setHoverIndex}
                 />
-                <EmptyRow count={data.length + 2} labelWidth={labelWidth} />
+                <EmptyRow count={structureData.length + 2} labelWidth={labelWidth} />
             </Grid>
         </Box>
     )

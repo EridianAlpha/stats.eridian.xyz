@@ -30,8 +30,9 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
         >
             <Box
                 position="absolute"
-                bg="blueDark"
+                bg="pageBackground"
                 px={2}
+                py={"2px"}
                 borderRadius={"full"}
                 border={hoverIndex == index || selectedIndex == index ? "2px solid" : "none"}
                 borderColor={hoverIndex == index || selectedIndex == index ? "textColor" : "transparent"}
@@ -73,7 +74,7 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 62 : 100)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -84,13 +85,13 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
             )}
 
             <Box
-                bg="blueDark"
+                bg="pageBackground"
                 position="absolute"
                 top="10px"
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
+                h={`${containerHeight - (index % 2 === 0 ? 62 : 100)}px`}
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setHoverIndex(index)}

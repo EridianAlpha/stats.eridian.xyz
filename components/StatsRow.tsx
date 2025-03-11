@@ -49,7 +49,7 @@ export default function StatsRow({
             {data.map((item, index) => (
                 <VStack
                     key={item.date}
-                    bg={item.value === "0" ? "gray" : "green"}
+                    bg={item.value === "0" ? "pageBackground" : "green"}
                     borderRadius="full"
                     textAlign="center"
                     position="relative"
@@ -73,9 +73,13 @@ export default function StatsRow({
                         setHoverIndex(null)
                     }}
                 >
-                    <Text fontFamily="monospace" fontWeight="bold">
-                        {item.value === "0" ? "" : item.value}
-                    </Text>
+                    {selectedIndex !== null && selectedIndex != index ? (
+                        <></>
+                    ) : (
+                        <Text fontFamily="monospace" fontWeight="bold">
+                            {item.value === "0" ? "" : item.value}
+                        </Text>
+                    )}
                 </VStack>
             ))}
         </>
