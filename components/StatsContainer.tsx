@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react"
-import { Grid, Box, Text, VStack } from "@chakra-ui/react"
+import { Grid, Box, Text, VStack, Badge } from "@chakra-ui/react"
 
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
@@ -15,6 +15,7 @@ export default function StatsContainer({
     selectedIndex: number | null
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
 }) {
+    const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0)
     const [containerWidth, setContainerWidth] = useState(0)
@@ -60,6 +61,8 @@ export default function StatsContainer({
                             selectedIndex={selectedIndex}
                             setSelectedIndex={setSelectedIndex}
                             containerHeight={containerHeight}
+                            hoverIndex={hoverIndex}
+                            setHoverIndex={setHoverIndex}
                         />
                     ) : (
                         <Box key={`empty-${item.date}`} />
@@ -94,6 +97,8 @@ export default function StatsContainer({
                             selectedIndex={selectedIndex}
                             setSelectedIndex={setSelectedIndex}
                             containerHeight={containerHeight}
+                            hoverIndex={hoverIndex}
+                            setHoverIndex={setHoverIndex}
                         />
                     ) : (
                         <Box key={`empty-${item.date}`} />
@@ -108,11 +113,22 @@ export default function StatsContainer({
                         data={data}
                         labelWidth={labelWidth}
                         firstRow={index === 0}
+                        setSelectedIndex={setSelectedIndex}
+                        setHoverIndex={setHoverIndex}
+                        selectedIndex={selectedIndex}
+                        hoverIndex={hoverIndex}
                     />
                 ))}
-                <EmptyRow count={data.length + 2} labelWidth={labelWidth} sectionEnd={true} />
-                <EmptyRow count={data.length + 2} labelWidth={labelWidth} selectedIndex={selectedIndex} setSelectedIndex={setSelectedIndex} />
-                <Text>Selected Index: {selectedIndex}</Text>
+                <EmptyRow
+                    count={data.length + 2}
+                    labelWidth={labelWidth}
+                    sectionEnd={true}
+                    selectedIndex={selectedIndex}
+                    setSelectedIndex={setSelectedIndex}
+                    hoverIndex={hoverIndex}
+                    setHoverIndex={setHoverIndex}
+                />
+                <EmptyRow count={data.length + 2} labelWidth={labelWidth} />
             </Grid>
         </Box>
     )

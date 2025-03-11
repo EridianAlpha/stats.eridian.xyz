@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react"
-import { Box } from "@chakra-ui/react"
+import { Box, Text } from "@chakra-ui/react"
 
 interface EmptyRowProps {
     count: number
@@ -9,6 +9,8 @@ interface EmptyRowProps {
     height?: string
     selectedIndex?: number | null
     setSelectedIndex?: Dispatch<SetStateAction<number | null>>
+    hoverIndex?: number | null
+    setHoverIndex?: Dispatch<SetStateAction<number | null>>
 }
 
 export default function EmptyRow({
@@ -19,6 +21,8 @@ export default function EmptyRow({
     height,
     selectedIndex = null,
     setSelectedIndex = () => {},
+    hoverIndex = null,
+    setHoverIndex = () => {},
 }: EmptyRowProps) {
     return (
         <>
@@ -48,10 +52,12 @@ export default function EmptyRow({
                                     h="18px"
                                     borderRadius="full"
                                     bg="blueDark"
-                                    border={selectedIndex == index ? "2px solid" : "none"}
+                                    border={
+                                        (selectedIndex !== null && selectedIndex + 2 === index) || (hoverIndex !== null && hoverIndex + 2 === index)
+                                            ? "2px solid"
+                                            : "none"
+                                    }
                                 />
-                                {selectedIndex}
-                                {index}
                             </Box>
                         )
                     } else {

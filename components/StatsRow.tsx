@@ -1,5 +1,6 @@
 import { Box, Text, VStack } from "@chakra-ui/react"
 import EmptyRow from "./EmptyRow"
+import { Dispatch, SetStateAction } from "react"
 
 interface StatsRowProps {
     title: string
@@ -7,9 +8,23 @@ interface StatsRowProps {
     data: { date: string; value: string }[]
     labelWidth: string
     firstRow?: boolean
+    setSelectedIndex: Dispatch<SetStateAction<number | null>>
+    setHoverIndex: Dispatch<SetStateAction<number | null>>
+    selectedIndex: number | null
+    hoverIndex: number | null
 }
 
-export default function StatsRow({ title, emoji, data, labelWidth, firstRow = false }: StatsRowProps) {
+export default function StatsRow({
+    title,
+    emoji,
+    data,
+    labelWidth,
+    firstRow = false,
+    setSelectedIndex,
+    setHoverIndex,
+    selectedIndex,
+    hoverIndex,
+}: StatsRowProps) {
     return (
         <>
             <EmptyRow count={data.length + 2} labelWidth={labelWidth} firstRow={firstRow} />
@@ -31,7 +46,7 @@ export default function StatsRow({ title, emoji, data, labelWidth, firstRow = fa
             </Box>
 
             {/* Data Boxes */}
-            {data.map((item) => (
+            {data.map((item, index) => (
                 <VStack
                     key={item.date}
                     bg={item.value === "0" ? "gray" : "green"}
@@ -42,6 +57,21 @@ export default function StatsRow({ title, emoji, data, labelWidth, firstRow = fa
                     zIndex={5}
                     mx="5px"
                     minW="40px"
+                    cursor="pointer"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        if (selectedIndex == index) {
+                            setSelectedIndex(null)
+                        } else {
+                            setSelectedIndex(index)
+                        }
+                    }}
+                    onMouseEnter={() => {
+                        setHoverIndex(index)
+                    }}
+                    onMouseLeave={() => {
+                        setHoverIndex(null)
+                    }}
                 >
                     <Text fontFamily="monospace" fontWeight="bold">
                         {item.value === "0" ? "" : item.value}

@@ -13,11 +13,11 @@ interface DateLabelProps {
     selectedIndex: number | null
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
     containerHeight: number
+    hoverIndex: number | null
+    setHoverIndex: Dispatch<SetStateAction<number | null>>
 }
 
-export default function DateLabel({ item, index, selectedIndex, setSelectedIndex, containerHeight }: DateLabelProps) {
-    const [isHovered, setIsHovered] = useState(false)
-
+export default function DateLabel({ item, index, selectedIndex, setSelectedIndex, containerHeight, hoverIndex, setHoverIndex }: DateLabelProps) {
     return (
         <Box
             key={`date-${item.date}`}
@@ -33,11 +33,15 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                 bg="blueDark"
                 px={2}
                 borderRadius={"full"}
-                border={isHovered || selectedIndex == index ? "2px solid" : "none"}
-                borderColor={isHovered || selectedIndex == index ? "textColor" : "transparent"}
+                border={hoverIndex == index || selectedIndex == index ? "2px solid" : "none"}
+                borderColor={hoverIndex == index || selectedIndex == index ? "textColor" : "transparent"}
                 cursor={"pointer"}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => {
+                    setHoverIndex(index)
+                }}
+                onMouseLeave={() => {
+                    setHoverIndex(null)
+                }}
                 onClick={(e) => {
                     e.stopPropagation()
                     if (selectedIndex == index) {
@@ -62,14 +66,14 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                 </Text>
             </Box>
 
-            {(isHovered || selectedIndex == index) && (
+            {(hoverIndex == index || selectedIndex == index) && (
                 <HStack
                     gap={0}
                     position="absolute"
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 90 : 120)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -86,11 +90,11 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 90 : 120)}px`}
+                h={`${containerHeight - (index % 2 === 0 ? 70 : 110)}px`}
                 zIndex={5}
                 cursor={"pointer"}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => setHoverIndex(index)}
+                onMouseLeave={() => setHoverIndex(null)}
                 onClick={(e) => {
                     e.stopPropagation()
                     if (selectedIndex == index) {
