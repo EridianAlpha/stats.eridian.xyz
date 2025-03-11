@@ -28,7 +28,6 @@ export default function StatsRow({
     hoverIndex,
 }: StatsRowProps) {
     const maxValue = useMemo(() => {
-        console.log(data)
         return Math.max(...data.map((item) => item.value || 0))
     }, [data])
 
@@ -54,13 +53,13 @@ export default function StatsRow({
 
             {/* Data Boxes */}
             {data.map((item, index) => {
-                // const lightness = maxValue > 0 ? 45 - (item.value / maxValue) * 20 : 0
                 const lightness = maxValue > 0 ? 20 + (item.value / maxValue) * 30 : 0
+                const calculatedBgColor = `hsl(120, 71%, ${lightness}%)`
 
                 return (
                     <VStack
                         key={item.date}
-                        bg={item.value === 0 ? "pageBackground" : `hsl(120, 71%, ${lightness}%)`}
+                        bg={item.value === 0 ? "pageBackground" : calculatedBgColor}
                         borderRadius="10px"
                         textAlign="center"
                         position="relative"
@@ -85,10 +84,25 @@ export default function StatsRow({
                             setHoverIndex(null)
                         }}
                     >
+                        {/* Border Hider Box - Same BG as VStack, covers top/bottom border */}
+                        {(hoverIndex === index || selectedIndex === index) && (
+                            <Box
+                                position="absolute"
+                                left="50%"
+                                top="50%"
+                                transform="translate(-50%, -50%)"
+                                bg={item.value === 0 ? "pageBackground" : calculatedBgColor}
+                                h="calc(100% + 4px)"
+                                w="10px"
+                                zIndex={6}
+                            />
+                        )}
+
+                        {/* Show Text Only When Not Selected */}
                         {selectedIndex !== null && selectedIndex != index ? (
                             <></>
                         ) : (
-                            <Text fontFamily="monospace" fontWeight="bold">
+                            <Text fontFamily="monospace" fontWeight="bold" zIndex={6}>
                                 {item.value === 0 ? "" : formatNumber(item.value)}
                             </Text>
                         )}
