@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Dispatch, SetStateAction } from "react"
+import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react"
 import { Grid, Box, Text, VStack, HStack } from "@chakra-ui/react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -21,11 +21,13 @@ function DateLabel({
     index,
     selectedDate,
     setSelectedDate,
+    containerHeight,
 }: {
     item: (typeof data)[number]
     index: number
     selectedDate: string
     setSelectedDate: Dispatch<SetStateAction<string>>
+    containerHeight: number
 }) {
     const [isHovered, setIsHovered] = useState(false)
 
@@ -80,7 +82,7 @@ function DateLabel({
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h="100vh"
+                    h={`${containerHeight - (index % 2 === 0 ? 40 : 80)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -97,7 +99,7 @@ function DateLabel({
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={"100vh"}
+                h={`${containerHeight - (index % 2 === 0 ? 40 : 80)}px`}
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setIsHovered(true)}
@@ -122,10 +124,28 @@ export default function StatsContainer({
     selectedDate: string
     setSelectedDate: Dispatch<SetStateAction<string>>
 }) {
+    const containerRef = useRef<HTMLDivElement>(null)
+    const [containerHeight, setContainerHeight] = useState(0)
+    const [containerWidth, setContainerWidth] = useState(0)
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (containerRef.current) {
+                setContainerHeight(containerRef.current.clientHeight)
+                setContainerWidth(containerRef.current.scrollWidth)
+            }
+        }
+
+        updateDimensions()
+        window.addEventListener("resize", updateDimensions)
+
+        return () => window.removeEventListener("resize", updateDimensions)
+    }, [])
+
     const labelWidth = "150px"
     return (
-        <Box bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
-            <Grid templateColumns={`repeat(${data.length + 2}, 1fr)`} pt={3} gap={"0px"} position="relative">
+        <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
+            <Grid templateColumns={`repeat(${data.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
                 {/* Empty first column for alignment */}
                 <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} />
                 <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
@@ -133,7 +153,14 @@ export default function StatsContainer({
                 {/* First row: Odd index dates */}
                 {data.map((item, index) =>
                     index % 2 === 0 ? (
-                        <DateLabel key={item.date} item={item} index={index} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                        <DateLabel
+                            key={item.date}
+                            item={item}
+                            index={index}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                            containerHeight={containerHeight}
+                        />
                     ) : (
                         <Box key={`empty-${item.date}`} />
                     ),
@@ -145,7 +172,14 @@ export default function StatsContainer({
                 {/* Second row: Even index dates */}
                 {data.map((item, index) =>
                     index % 2 !== 0 ? (
-                        <DateLabel key={item.date} item={item} index={index} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+                        <DateLabel
+                            key={item.date}
+                            item={item}
+                            index={index}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                            containerHeight={containerHeight}
+                        />
                     ) : (
                         <Box key={`empty-${item.date}`} />
                     ),
@@ -210,7 +244,7 @@ export default function StatsContainer({
                     </VStack>
                 ))}
             </Grid>
-            <Box w={"100%"} h={"15px"} bg={"contentBackground"} zIndex={6} position="relative" bottom={0} />
+            <Box w={`${containerWidth}px`} h={"15px"} bg={"contentBackground"} zIndex={6} position="relative" bottom={0} />
         </Box>
     )
 }
