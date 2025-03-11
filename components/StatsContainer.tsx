@@ -48,8 +48,21 @@ function DateLabel({
                         setSelectedDate(item.date)
                     }
                 }}
+                transform={index === 0 ? "translateX(-30%)" : "none"}
             >
-                <Text fontSize="sm" fontWeight="bold" whiteSpace="nowrap">
+                <Text
+                    fontSize="sm"
+                    fontWeight="bold"
+                    whiteSpace="nowrap"
+                    display="flex"
+                    justifyContent="flex-end"
+                    minWidth={index === 0 ? "120px" : "auto"}
+                >
+                    {index === 0 && (
+                        <Text as="span" mr={2}>
+                            Today -
+                        </Text>
+                    )}
                     {item.formattedDate}
                 </Text>
             </Box>
@@ -96,9 +109,13 @@ function DateLabel({
     )
 }
 
-export default function StatsContainer() {
-    const [selectedDate, setSelectedDate] = useState("")
-
+export default function StatsContainer({
+    selectedDate,
+    setSelectedDate,
+}: {
+    selectedDate: string
+    setSelectedDate: Dispatch<SetStateAction<string>>
+}) {
     return (
         <Grid
             templateColumns={`repeat(22, 1fr)`}
@@ -109,7 +126,6 @@ export default function StatsContainer() {
             gap={"0px"}
             position="relative"
             overflow="hidden"
-            onClick={() => setSelectedDate("")}
         >
             {/* Empty first column for alignment */}
             <Box />
@@ -136,7 +152,7 @@ export default function StatsContainer() {
                 ),
             )}
             {/* Section Header Row */}
-            <Box fontWeight="bold" textAlign="left" whiteSpace="nowrap" color={"blueDark"}>
+            <Box fontWeight="bold" textAlign="left" whiteSpace="nowrap" color={"blue"} fontSize={"xl"}>
                 Websites
             </Box>
             <Box />
@@ -149,7 +165,7 @@ export default function StatsContainer() {
             <Box fontWeight="bold" textAlign="center" whiteSpace="nowrap">
                 eridian.xyz
             </Box>
-            <Box fontWeight="bold" whiteSpace="nowrap" textAlign="center" w={"100%"}>
+            <Box fontWeight="bold" whiteSpace="nowrap" textAlign="center" w={"100%"} minW={"40px"}>
                 👀
             </Box>
 
