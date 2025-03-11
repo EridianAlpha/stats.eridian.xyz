@@ -7,7 +7,7 @@ interface DateLabelProps {
     item: {
         date: string
         formattedDate: string
-        value: string
+        value: number
     }
     index: number
     selectedIndex: number | null
@@ -66,7 +66,6 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                     {item.formattedDate}
                 </Text>
             </Box>
-
             {(hoverIndex == index || selectedIndex == index) && (
                 <HStack
                     gap={0}
@@ -83,7 +82,6 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                     <Box bg="textColor" w={"2px"} h={"100%"} />
                 </HStack>
             )}
-
             <Box
                 bg="pageBackground"
                 position="absolute"

@@ -20,12 +20,12 @@ export default function StatsContainer({
     const [containerHeight, setContainerHeight] = useState(0)
     const [containerWidth, setContainerWidth] = useState(0)
     const [websiteConfigs] = useState([
-        { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData() },
-        { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData() },
-        { title: "📋 staking.directory", emoji: "👀", data: generateSampleData() },
-        { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData() },
-        { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData() },
-        { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData() },
+        { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
+        { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 10 }) },
+        { title: "📋 staking.directory", emoji: "👀", data: generateSampleData({ maxValue: 200 }) },
+        { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
+        { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 20 }) },
+        { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData({ maxValue: 300 }) },
     ])
 
     useEffect(() => {
