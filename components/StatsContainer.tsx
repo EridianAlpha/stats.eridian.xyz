@@ -43,7 +43,6 @@ function DateLabel({
                 position="absolute"
                 bg="blueDark"
                 px={2}
-                // py={"2px"}
                 borderRadius={"full"}
                 border={isHovered || selectedDate == item.date ? "2px solid" : "none"}
                 borderColor={isHovered || selectedDate == item.date ? "textColor" : "transparent"}
@@ -161,11 +160,13 @@ export default function StatsContainer({
                     position="sticky"
                     left={0}
                     bg={"contentBackground"}
-                    zIndex={5}
-                    // py={2}
+                    zIndex={10}
                     px={5}
+                    maxH={"10px"}
                 >
-                    Websites
+                    <Text position={"relative"} top={"-25px"}>
+                        Websites
+                    </Text>
                 </Box>
                 <Box position="sticky" left={labelWidth} zIndex={5} bg={"contentBackground"} borderTopRightRadius={"20px"} />
 
@@ -174,30 +175,18 @@ export default function StatsContainer({
                     <Box key={`header-empty-${index}`} />
                 ))}
                 {/* First column for name label */}
-                <Box
-                    fontWeight="bold"
-                    whiteSpace="nowrap"
-                    position="sticky"
-                    left={0}
-                    bg={"contentBackground"}
-                    zIndex={6}
-                    // py={1}
-                    px={5}
-                    minW={labelWidth}
-                >
+                <Box fontWeight="bold" whiteSpace="nowrap" position="sticky" left={0} bg={"contentBackground"} zIndex={6} px={5} minW={labelWidth}>
                     eridian.xyz
                 </Box>
                 <Box
                     fontWeight="bold"
                     whiteSpace="nowrap"
                     textAlign="center"
-                    // w={"100%"}
                     minW={"40px"}
                     position="sticky"
                     left={labelWidth}
                     bg={"contentBackground"}
                     zIndex={6}
-                    // py={1}
                 >
                     👀
                 </Box>
