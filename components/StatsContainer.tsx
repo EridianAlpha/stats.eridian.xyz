@@ -9,7 +9,7 @@ const data = Array.from({ length: 20 }, (_, i) => {
     return {
         date: date.toISOString().split("T")[0], // Format as YYYY-MM-DD
         formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}`,
-        value: Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 1000),
+        value: "999k", // Math.random() < 0.5 ? 0 : Math.floor(Math.random() * 1000),
     }
 })
 
@@ -30,7 +30,7 @@ function DateLabel({
         <Box key={`date-${item.date}`} position="relative" display="flex" justifyContent="center" alignItems="center" my={4} fontFamily={"monospace"}>
             <Box
                 position="absolute"
-                bg="pageBackground"
+                bg="blueDark"
                 px={2}
                 py={"2px"}
                 borderRadius={"full"}
@@ -72,7 +72,7 @@ function DateLabel({
             )}
 
             <Box
-                bg="pageBackground"
+                bg="blueDark"
                 position="absolute"
                 top="10px"
                 left="50%"
@@ -136,7 +136,7 @@ export default function StatsContainer() {
                 ),
             )}
             {/* Section Header Row */}
-            <Box fontWeight="bold" textAlign="left" whiteSpace="nowrap" color={"blue"}>
+            <Box fontWeight="bold" textAlign="left" whiteSpace="nowrap" color={"blueDark"}>
                 Websites
             </Box>
             <Box />
@@ -157,7 +157,7 @@ export default function StatsContainer() {
             {data.map((item) => (
                 <VStack
                     key={item.date}
-                    bg={item.value === 0 ? "gray" : "green"}
+                    bg={item.value === "0" ? "gray" : "green"}
                     borderRadius={"full"}
                     textAlign="center"
                     position="relative"
@@ -167,7 +167,7 @@ export default function StatsContainer() {
                     minW={"40px"}
                 >
                     <Text fontFamily={"monospace"} fontWeight={"bold"}>
-                        {item.value === 0 ? "" : item.value}
+                        {item.value === "0" ? "" : item.value}
                     </Text>
                 </VStack>
             ))}

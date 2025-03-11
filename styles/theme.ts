@@ -5,6 +5,7 @@ export const customConfig = createSystem(defaultConfig, {
         tokens: {
             colors: {
                 blue: { value: "#36A2EB" },
+                blueDark: { value: "#1669a1" },
                 red: { value: "#EC420C" },
                 gold: { value: "#e7c60d" },
             },
