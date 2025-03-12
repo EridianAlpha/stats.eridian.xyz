@@ -6,7 +6,29 @@ import { Grid, Box, VStack } from "@chakra-ui/react"
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
 import StatsRow from "./StatsRow"
+import SectionEnd from "./SectionEnd"
 import { generateSampleData } from "../utils/statsUtils"
+
+const HeadingCell = ({ children }: { children: React.ReactNode }) => {
+    return (
+        <VStack
+            fontWeight="bold"
+            textAlign="left"
+            whiteSpace="nowrap"
+            color={"blue"}
+            fontSize={"xl"}
+            position="sticky"
+            left={0}
+            bg={"yellow"}
+            zIndex={10}
+            px={5}
+            justifyContent="end"
+            alignItems="start"
+        >
+            {children}
+        </VStack>
+    )
+}
 
 export default function StatsContainer({
     selectedIndex,
@@ -55,11 +77,9 @@ export default function StatsContainer({
     return (
         <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
             <Grid templateColumns={`repeat(${structureData.length + 2}, 1fr)`} pt={3} mr={5} gap={"0px"} position="relative" w={containerWidth}>
-                {/* Empty first column for alignment */}
+                {/* First row: Odd index dates */}
                 <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} />
                 <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
-
-                {/* First row: Odd index dates */}
                 {structureData.map((item, index) =>
                     index % 2 === 0 ? (
                         <DateLabel
@@ -76,26 +96,10 @@ export default function StatsContainer({
                         <Box key={`empty-${item.date}`} />
                     ),
                 )}
-                {/* Empty first column for alignment */}
-                <VStack
-                    fontWeight="bold"
-                    textAlign="left"
-                    whiteSpace="nowrap"
-                    color={"blue"}
-                    fontSize={"xl"}
-                    position="sticky"
-                    left={0}
-                    bg={"contentBackground"}
-                    zIndex={10}
-                    px={5}
-                    justifyContent="end"
-                    alignItems="start"
-                >
-                    Websites
-                </VStack>
-                <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
 
                 {/* Second row: Even index dates */}
+                <HeadingCell>Websites</HeadingCell>
+                <Box position="sticky" left={labelWidth} zIndex={2} bg={"blue"} />
                 {structureData.map((item, index) =>
                     index % 2 !== 0 ? (
                         <DateLabel
@@ -113,6 +117,7 @@ export default function StatsContainer({
                     ),
                 )}
 
+                {/* First Stats Rows */}
                 {websiteConfigs.map((config, index) => (
                     <StatsRow
                         key={config.title}
@@ -128,42 +133,12 @@ export default function StatsContainer({
                     />
                 ))}
 
-                <EmptyRow
-                    count={structureData.length + 2}
-                    height="10px"
-                    labelWidth={labelWidth}
-                    selectedIndex={selectedIndex}
-                    hoverIndex={hoverIndex}
-                    setHoverIndex={setHoverIndex}
-                />
-                <VStack
-                    fontWeight="bold"
-                    textAlign="left"
-                    whiteSpace="nowrap"
-                    color={"blue"}
-                    fontSize={"xl"}
-                    position="sticky"
-                    left={0}
-                    bg={"contentBackground"}
-                    zIndex={10}
-                    px={5}
-                    justifyContent="end"
-                    alignItems="start"
-                    w={labelWidth}
-                >
-                    Socials
-                </VStack>
-                <EmptyRow
-                    count={structureData.length + 2}
-                    titleRow={true}
-                    height="50px"
-                    labelWidth={labelWidth}
-                    selectedIndex={selectedIndex}
-                    hoverIndex={hoverIndex}
-                    setHoverIndex={setHoverIndex}
-                />
+                {/* First Stats Rows */}
+                <EmptyRow count={structureData.length + 2} height="10px" labelWidth={labelWidth} />
+                <HeadingCell>Socials</HeadingCell>
+                <EmptyRow count={structureData.length + 2} headingRow={true} height="50px" labelWidth={labelWidth} />
 
-                {socialConfigs.map((config, index) => (
+                {socialConfigs.map((config) => (
                     <StatsRow
                         key={config.title}
                         title={config.title}
@@ -176,15 +151,9 @@ export default function StatsContainer({
                         hoverIndex={hoverIndex}
                     />
                 ))}
-                <EmptyRow
-                    count={structureData.length + 2}
-                    labelWidth={labelWidth}
-                    sectionEnd={true}
-                    selectedIndex={selectedIndex}
-                    hoverIndex={hoverIndex}
-                    setHoverIndex={setHoverIndex}
-                />
-                <EmptyRow count={structureData.length + 2} labelWidth={labelWidth} />
+
+                <SectionEnd count={structureData.length + 2} labelWidth={labelWidth} selectedIndex={selectedIndex} hoverIndex={hoverIndex} />
+                <EmptyRow count={structureData.length + 2} labelWidth={labelWidth} height="15px" />
             </Grid>
         </Box>
     )
