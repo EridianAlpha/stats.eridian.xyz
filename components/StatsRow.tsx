@@ -1,11 +1,14 @@
-import { Box, Text, VStack } from "@chakra-ui/react"
+import { Box, HStack, Text, VStack, Tooltip, Portal } from "@chakra-ui/react"
 import EmptyRow from "./EmptyRow"
 import { Dispatch, SetStateAction, useMemo } from "react"
+
+import Link from "next/link"
 
 import { formatNumber } from "../utils/statsUtils"
 
 interface StatsRowProps {
     title: string
+    link: string
     emoji: string
     data: { date: string; value: number }[]
     labelWidth: string
@@ -14,10 +17,12 @@ interface StatsRowProps {
     setHoverIndex: Dispatch<SetStateAction<number | null>>
     selectedIndex: number | null
     hoverIndex: number | null
+    type: string
 }
 
 export default function StatsRow({
     title,
+    link,
     emoji,
     data,
     labelWidth,
@@ -26,6 +31,7 @@ export default function StatsRow({
     setHoverIndex,
     selectedIndex,
     hoverIndex,
+    type,
 }: StatsRowProps) {
     const maxValue = useMemo(() => {
         return Math.max(...data.map((item) => item.value || 0))
@@ -35,21 +41,52 @@ export default function StatsRow({
         <>
             <EmptyRow count={data.length + 2} labelWidth={labelWidth} firstRow={firstRow} />
             {/* First column for name label */}
-            <Box fontWeight="bold" whiteSpace="nowrap" position="sticky" left={0} bg="contentBackground" zIndex={6} px={5} minW={labelWidth}>
-                {title}
-            </Box>
             <Box
                 fontWeight="bold"
                 whiteSpace="nowrap"
-                textAlign="center"
-                minW="40px"
                 position="sticky"
-                left={labelWidth}
+                left={0}
                 bg="contentBackground"
                 zIndex={6}
+                px={5}
+                minW={labelWidth}
+                cursor={link ? "pointer" : "default"}
             >
-                {emoji}
+                {link ? (
+                    <HStack cursor="pointer" className="group" gap={1}>
+                        <Link href={link} target="_blank">
+                            <Text _groupHover={{ textDecoration: "underline" }}>{title}</Text>
+                        </Link>
+                        <Text opacity={0} _groupHover={{ opacity: 1 }}>
+                            ↗
+                        </Text>
+                    </HStack>
+                ) : (
+                    title
+                )}
             </Box>
+            <Tooltip.Root openDelay={100} closeDelay={100} positioning={{ placement: "top", offset: { mainAxis: 2, crossAxis: 0 } }}>
+                <Tooltip.Trigger asChild>
+                    <Box
+                        fontWeight="bold"
+                        whiteSpace="nowrap"
+                        textAlign="center"
+                        minW="40px"
+                        position="sticky"
+                        left={labelWidth}
+                        bg="contentBackground"
+                        zIndex={6}
+                        cursor="help"
+                    >
+                        {emoji}
+                    </Box>
+                </Tooltip.Trigger>
+                <Portal>
+                    <Tooltip.Positioner>
+                        <Tooltip.Content>{type.charAt(0).toUpperCase() + type.slice(1)}</Tooltip.Content>
+                    </Tooltip.Positioner>
+                </Portal>
+            </Tooltip.Root>
 
             {/* Data Boxes */}
             {data.map((item, index) => {

@@ -43,26 +43,57 @@ export default function StatsContainer({
     const [containerWidth, setContainerWidth] = useState(0)
     const [data] = useState({
         websites: [
-            { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
-            { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 10 }) },
-            { title: "📋 staking.directory", emoji: "👀", data: generateSampleData({ maxValue: 200 }) },
-            { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
-            { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 20 }) },
-            { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData({ maxValue: 300 }) },
+            { title: "💻 eridian.xyz", link: "https://eridian.xyz", emoji: "👀", type: "views", data: generateSampleData({ maxValue: 50 }) },
+            {
+                title: "📖 docs.eridian.xyz",
+                link: "https://docs.eridian.xyz",
+                emoji: "👀",
+                type: "views",
+                data: generateSampleData({ maxValue: 10 }),
+            },
+            {
+                title: "📋 staking.directory",
+                link: "https://staking.directory",
+                emoji: "👀",
+                type: "views",
+                data: generateSampleData({ maxValue: 200 }),
+            },
+            {
+                title: "⛺️ settlers.eridian.xyz",
+                link: "https://settlers.eridian.xyz",
+                emoji: "👀",
+                type: "views",
+                data: generateSampleData({ maxValue: 50 }),
+            },
+            {
+                title: "🏖️ pool.eridian.xyz",
+                link: "https://pool.eridian.xyz",
+                emoji: "👀",
+                type: "views",
+                data: generateSampleData({ maxValue: 20 }),
+            },
+            { title: "💰 ssvrewards.com", link: "https://ssvrewards.com", emoji: "👀", type: "views", data: generateSampleData({ maxValue: 300 }) },
         ],
         github: [
-            { title: "💻 eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 50 }) },
-            { title: "📖 docs.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 10 }) },
-            { title: "📋 staking.directory", emoji: "💻", data: generateSampleData({ maxValue: 200 }) },
-            { title: "⛺️ settlers.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 50 }) },
-            { title: "🏖️ pool.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 20 }) },
-            { title: "💰 ssvrewards.com", emoji: "💻", data: generateSampleData({ maxValue: 300 }) },
+            {
+                title: "💻 eridian.xyz",
+                link: "https://github.com/EridianAlpha/eridian.xyz",
+                emoji: "💻",
+                type: "commits",
+                data: generateSampleData({ maxValue: 50 }),
+            },
+            {
+                title: "📖 docs.eridian.xyz",
+                link: "https://github.com/EridianAlpha/docs",
+                emoji: "💻",
+                type: "commits",
+                data: generateSampleData({ maxValue: 10 }),
+            },
         ],
         socials: [
-            { title: "X Posts", emoji: "📣", data: generateSampleData({ maxValue: 50 }) },
-            { title: "X Reposts", emoji: "🔁", data: generateSampleData({ maxValue: 10 }) },
-            { title: "X Likes", emoji: "❤️", data: generateSampleData({ maxValue: 200 }) },
-            { title: "X Comments", emoji: "💬", data: generateSampleData({ maxValue: 300 }) },
+            { title: "X Posts", link: "https://x.com/EridianAlpha", emoji: "📣", type: "posts", data: generateSampleData({ maxValue: 50 }) },
+            { title: "X Reposts", link: "https://x.com/EridianAlpha", emoji: "🔁", type: "reposts", data: generateSampleData({ maxValue: 10 }) },
+            { title: "X Comments", link: "https://x.com/EridianAlpha", emoji: "💬", type: "comments", data: generateSampleData({ maxValue: 300 }) },
         ],
     })
 
@@ -80,7 +111,7 @@ export default function StatsContainer({
         return () => window.removeEventListener("resize", updateDimensions)
     }, [])
 
-    const labelWidth = "200px"
+    const labelWidth = "210px"
     const structureData = Object.values(data)[0][0].data
 
     return (
@@ -131,7 +162,9 @@ export default function StatsContainer({
                     <StatsRow
                         key={config.title}
                         title={config.title}
+                        link={config.link}
                         emoji={config.emoji}
+                        type={config.type}
                         data={config.data}
                         labelWidth={labelWidth}
                         firstRow={index === 0}
@@ -147,14 +180,15 @@ export default function StatsContainer({
                     .slice(1)
                     .map(([sectionName, section]) => (
                         <Fragment key={sectionName}>
-                            <EmptyRow count={structureData.length + 2} height="10px" labelWidth={labelWidth} />
                             <HeadingCell>{sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}</HeadingCell>
-                            <EmptyRow count={structureData.length + 2} headingRow={true} height="50px" labelWidth={labelWidth} />
+                            <EmptyRow count={structureData.length + 2} headingRow={true} height="60px" labelWidth={labelWidth} />
                             {section.map((config) => (
                                 <StatsRow
                                     key={config.title}
                                     title={config.title}
+                                    link={config.link}
                                     emoji={config.emoji}
+                                    type={config.type}
                                     data={config.data}
                                     labelWidth={labelWidth}
                                     setSelectedIndex={setSelectedIndex}
