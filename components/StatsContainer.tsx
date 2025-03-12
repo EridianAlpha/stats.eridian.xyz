@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react"
-import { Grid, Box, Text, VStack, Badge } from "@chakra-ui/react"
+import { Grid, Box, VStack } from "@chakra-ui/react"
 
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
