@@ -5,54 +5,14 @@
                 "text": "eridian.xyz",
                 "emoji": "💻"
             },
-            "GA4_PROPERTY_ID": "360020687",
+            "GA4_PROPERTY_ID": "481860738",
             "link": "https://eridian.xyz",
             "emoji": "👀",
             "type": "views",
             "data": [
                 {
-                    "date": "2025-03-10",
-                    "value": 4
-                },
-                {
-                    "date": "2025-03-06",
-                    "value": 1
-                },
-                {
-                    "date": "2025-03-03",
-                    "value": 2
-                },
-                {
-                    "date": "2025-03-01",
-                    "value": 2
-                },
-                {
-                    "date": "2025-02-21",
-                    "value": 2
-                },
-                {
-                    "date": "2025-02-19",
-                    "value": 2
-                },
-                {
-                    "date": "2025-02-18",
-                    "value": 1
-                },
-                {
-                    "date": "2025-02-16",
-                    "value": 1
-                },
-                {
-                    "date": "2025-02-15",
-                    "value": 1
-                },
-                {
-                    "date": "2025-02-14",
+                    "date": "2025-03-12",
                     "value": 3
-                },
-                {
-                    "date": "2025-02-10",
-                    "value": 2
                 }
             ]
         },
