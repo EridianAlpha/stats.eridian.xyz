@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Dispatch, SetStateAction, useRef, useEffect } from "react"
+import { useState, Dispatch, SetStateAction, useRef, useEffect, Fragment } from "react"
 import { Grid, Box, VStack } from "@chakra-ui/react"
 
 import DateLabel from "./DateLabel"
@@ -19,7 +19,7 @@ const HeadingCell = ({ children }: { children: React.ReactNode }) => {
             fontSize={"xl"}
             position="sticky"
             left={0}
-            bg={"yellow"}
+            bg={"contentBackground"}
             zIndex={10}
             px={5}
             justifyContent="end"
@@ -41,20 +41,30 @@ export default function StatsContainer({
     const containerRef = useRef<HTMLDivElement>(null)
     const [containerHeight, setContainerHeight] = useState(0)
     const [containerWidth, setContainerWidth] = useState(0)
-    const [websiteConfigs] = useState([
-        { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
-        { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 10 }) },
-        { title: "📋 staking.directory", emoji: "👀", data: generateSampleData({ maxValue: 200 }) },
-        { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
-        { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 20 }) },
-        { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData({ maxValue: 300 }) },
-    ])
-    const [socialConfigs] = useState([
-        { title: "X Posts", emoji: "📣", data: generateSampleData({ maxValue: 50 }) },
-        { title: "X Reposts", emoji: "🔁", data: generateSampleData({ maxValue: 10 }) },
-        { title: "X Likes", emoji: "❤️", data: generateSampleData({ maxValue: 200 }) },
-        { title: "X Comments", emoji: "💬", data: generateSampleData({ maxValue: 300 }) },
-    ])
+    const [data] = useState({
+        websites: [
+            { title: "💻 eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
+            { title: "📖 docs.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 10 }) },
+            { title: "📋 staking.directory", emoji: "👀", data: generateSampleData({ maxValue: 200 }) },
+            { title: "⛺️ settlers.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 50 }) },
+            { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 20 }) },
+            { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData({ maxValue: 300 }) },
+        ],
+        github: [
+            { title: "💻 eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 50 }) },
+            { title: "📖 docs.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 10 }) },
+            { title: "📋 staking.directory", emoji: "💻", data: generateSampleData({ maxValue: 200 }) },
+            { title: "⛺️ settlers.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 50 }) },
+            { title: "🏖️ pool.eridian.xyz", emoji: "💻", data: generateSampleData({ maxValue: 20 }) },
+            { title: "💰 ssvrewards.com", emoji: "💻", data: generateSampleData({ maxValue: 300 }) },
+        ],
+        socials: [
+            { title: "X Posts", emoji: "📣", data: generateSampleData({ maxValue: 50 }) },
+            { title: "X Reposts", emoji: "🔁", data: generateSampleData({ maxValue: 10 }) },
+            { title: "X Likes", emoji: "❤️", data: generateSampleData({ maxValue: 200 }) },
+            { title: "X Comments", emoji: "💬", data: generateSampleData({ maxValue: 300 }) },
+        ],
+    })
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -71,8 +81,7 @@ export default function StatsContainer({
     }, [])
 
     const labelWidth = "200px"
-    // Use the first website's data for the structure since all should have the same dates
-    const structureData = websiteConfigs[0].data
+    const structureData = Object.values(data)[0][0].data
 
     return (
         <Box ref={containerRef} bg={"contentBackground"} borderRadius={"20px"} position="relative" overflowX="scroll" maxWidth="100%">
@@ -99,7 +108,7 @@ export default function StatsContainer({
 
                 {/* Second row: Even index dates */}
                 <HeadingCell>Websites</HeadingCell>
-                <Box position="sticky" left={labelWidth} zIndex={2} bg={"blue"} />
+                <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
                 {structureData.map((item, index) =>
                     index % 2 !== 0 ? (
                         <DateLabel
@@ -118,7 +127,7 @@ export default function StatsContainer({
                 )}
 
                 {/* First Stats Rows */}
-                {websiteConfigs.map((config, index) => (
+                {Object.values(data)[0].map((config, index) => (
                     <StatsRow
                         key={config.title}
                         title={config.title}
@@ -133,24 +142,29 @@ export default function StatsContainer({
                     />
                 ))}
 
-                {/* First Stats Rows */}
-                <EmptyRow count={structureData.length + 2} height="10px" labelWidth={labelWidth} />
-                <HeadingCell>Socials</HeadingCell>
-                <EmptyRow count={structureData.length + 2} headingRow={true} height="50px" labelWidth={labelWidth} />
-
-                {socialConfigs.map((config) => (
-                    <StatsRow
-                        key={config.title}
-                        title={config.title}
-                        emoji={config.emoji}
-                        data={config.data}
-                        labelWidth={labelWidth}
-                        setSelectedIndex={setSelectedIndex}
-                        setHoverIndex={setHoverIndex}
-                        selectedIndex={selectedIndex}
-                        hoverIndex={hoverIndex}
-                    />
-                ))}
+                {/* Other Stats Rows */}
+                {Object.entries(data)
+                    .slice(1)
+                    .map(([sectionName, section]) => (
+                        <Fragment key={sectionName}>
+                            <EmptyRow count={structureData.length + 2} height="10px" labelWidth={labelWidth} />
+                            <HeadingCell>{sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}</HeadingCell>
+                            <EmptyRow count={structureData.length + 2} headingRow={true} height="50px" labelWidth={labelWidth} />
+                            {section.map((config) => (
+                                <StatsRow
+                                    key={config.title}
+                                    title={config.title}
+                                    emoji={config.emoji}
+                                    data={config.data}
+                                    labelWidth={labelWidth}
+                                    setSelectedIndex={setSelectedIndex}
+                                    setHoverIndex={setHoverIndex}
+                                    selectedIndex={selectedIndex}
+                                    hoverIndex={hoverIndex}
+                                />
+                            ))}
+                        </Fragment>
+                    ))}
 
                 <SectionEnd count={structureData.length + 2} labelWidth={labelWidth} selectedIndex={selectedIndex} hoverIndex={hoverIndex} />
                 <EmptyRow count={structureData.length + 2} labelWidth={labelWidth} height="15px" />
