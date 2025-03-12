@@ -11,11 +11,13 @@ interface EmptyRowProps {
     setSelectedIndex?: Dispatch<SetStateAction<number | null>>
     hoverIndex?: number | null
     setHoverIndex?: Dispatch<SetStateAction<number | null>>
+    titleRow?: boolean
 }
 
 export default function EmptyRow({
     count,
     labelWidth,
+    titleRow = false,
     firstRow = false,
     sectionEnd = false,
     height,
@@ -27,14 +29,28 @@ export default function EmptyRow({
     return (
         <>
             {Array.from({ length: count }).map((_, index) => {
-                if (index === 0 || index === 1) {
+                if (titleRow && index === 0) {
+                    return
+                } else if (index === 0) {
                     return (
                         <Box
                             key={`header-empty-${index}`}
                             h={height}
                             position="sticky"
-                            left={index === 0 ? 0 : labelWidth}
-                            bg="contentBackground"
+                            left={0}
+                            bg={"contentBackground"}
+                            zIndex={6}
+                            borderTopLeftRadius={index === 0 && firstRow ? "10px" : "0px"}
+                        />
+                    )
+                } else if (index === 1) {
+                    return (
+                        <Box
+                            key={`header-empty-${index}`}
+                            h={height}
+                            position="sticky"
+                            left={labelWidth}
+                            bg={"contentBackground"}
                             zIndex={6}
                             borderTopRightRadius={index === 1 && firstRow ? "10px" : "0px"}
                         />

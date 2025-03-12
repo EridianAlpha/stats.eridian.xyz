@@ -27,6 +27,12 @@ export default function StatsContainer({
         { title: "🏖️ pool.eridian.xyz", emoji: "👀", data: generateSampleData({ maxValue: 20 }) },
         { title: "💰 ssvrewards.com", emoji: "👀", data: generateSampleData({ maxValue: 300 }) },
     ])
+    const [socialConfigs] = useState([
+        { title: "X Posts", emoji: "📣", data: generateSampleData({ maxValue: 50 }) },
+        { title: "X Reposts", emoji: "🔁", data: generateSampleData({ maxValue: 10 }) },
+        { title: "X Likes", emoji: "❤️", data: generateSampleData({ maxValue: 200 }) },
+        { title: "X Comments", emoji: "💬", data: generateSampleData({ maxValue: 300 }) },
+    ])
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -121,12 +127,60 @@ export default function StatsContainer({
                         hoverIndex={hoverIndex}
                     />
                 ))}
+
+                <EmptyRow
+                    count={structureData.length + 2}
+                    height="10px"
+                    labelWidth={labelWidth}
+                    selectedIndex={selectedIndex}
+                    hoverIndex={hoverIndex}
+                    setHoverIndex={setHoverIndex}
+                />
+                <VStack
+                    fontWeight="bold"
+                    textAlign="left"
+                    whiteSpace="nowrap"
+                    color={"blue"}
+                    fontSize={"xl"}
+                    position="sticky"
+                    left={0}
+                    bg={"contentBackground"}
+                    zIndex={10}
+                    px={5}
+                    justifyContent="end"
+                    alignItems="start"
+                    w={labelWidth}
+                >
+                    Socials
+                </VStack>
+                <EmptyRow
+                    count={structureData.length + 2}
+                    titleRow={true}
+                    height="50px"
+                    labelWidth={labelWidth}
+                    selectedIndex={selectedIndex}
+                    hoverIndex={hoverIndex}
+                    setHoverIndex={setHoverIndex}
+                />
+
+                {socialConfigs.map((config, index) => (
+                    <StatsRow
+                        key={config.title}
+                        title={config.title}
+                        emoji={config.emoji}
+                        data={config.data}
+                        labelWidth={labelWidth}
+                        setSelectedIndex={setSelectedIndex}
+                        setHoverIndex={setHoverIndex}
+                        selectedIndex={selectedIndex}
+                        hoverIndex={hoverIndex}
+                    />
+                ))}
                 <EmptyRow
                     count={structureData.length + 2}
                     labelWidth={labelWidth}
                     sectionEnd={true}
                     selectedIndex={selectedIndex}
-                    setSelectedIndex={setSelectedIndex}
                     hoverIndex={hoverIndex}
                     setHoverIndex={setHoverIndex}
                 />

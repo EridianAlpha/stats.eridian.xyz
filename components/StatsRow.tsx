@@ -99,13 +99,11 @@ export default function StatsRow({
                         )}
 
                         {/* Show Text Only When Not Selected */}
-                        {selectedIndex !== null && selectedIndex != index ? (
-                            <></>
-                        ) : (
+                        {selectedIndex === null || selectedIndex === index || hoverIndex === index ? (
                             <Text fontFamily="monospace" fontWeight="bold" zIndex={6}>
                                 {item.value === 0 ? "" : formatNumber(item.value)}
                             </Text>
-                        )}
+                        ) : null}
                     </VStack>
                 )
             })}
