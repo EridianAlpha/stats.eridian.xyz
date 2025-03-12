@@ -1,0 +1,41 @@
+# .github/workflows/updateData.yml
+name: Update Data
+
+# Update data at 05:00 and 14:00 every day
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: "0 5,14 * * *"
+
+jobs:
+    updateData:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            pull-requests: write
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v2
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 14
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: Update website data
+              run: node scripts/getWebsiteData.js
+              env:
+                  GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY_BASE64: ${{ secrets.GOOGLE_ANALYTICS_SERVICE_ACCOUNT_KEY_BASE64 }}
+
+            - name: Commit and push changes
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: BOT - Update data
+                  branch: main
+                  commit_user_name: EridianAlpha-Bot
+                  commit_user_email: 132172290+EridianAlpha-Bot@users.noreply.github.com
+                  commit_author: EridianAlpha-Bot <132172290+EridianAlpha-Bot@users.noreply.github.com>
