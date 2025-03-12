@@ -1,0 +1,118 @@
+{
+    "websites": [
+        {
+            "title": {
+                "text": "eridian.xyz",
+                "emoji": "💻"
+            },
+            "link": "https://eridian.xyz",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "docs.eridian.xyz",
+                "emoji": "📖"
+            },
+            "link": "https://docs.eridian.xyz",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "staking.directory",
+                "emoji": "📋"
+            },
+            "link": "https://staking.directory",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "settlers.eridian.xyz",
+                "emoji": "⛺️"
+            },
+            "link": "https://settlers.eridian.xyz",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "pool.eridian.xyz",
+                "emoji": "🏖️"
+            },
+            "link": "https://pool.eridian.xyz",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "ssvrewards.com",
+                "emoji": "💰"
+            },
+            "link": "https://ssvrewards.com",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
+        }
+    ],
+    "repos": [
+        {
+            "title": {
+                "text": "eridian.xyz",
+                "emoji": "💻"
+            },
+            "link": "https://github.com/EridianAlpha/eridian.xyz",
+            "emoji": "💻",
+            "type": "commits",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "docs.eridian.xyz",
+                "emoji": "📖"
+            },
+            "link": "https://github.com/EridianAlpha/docs",
+            "emoji": "💻",
+            "type": "commits",
+            "data": []
+        }
+    ],
+    "socials": [
+        {
+            "title": {
+                "text": "X Posts",
+                "emoji": "📣"
+            },
+            "link": "https://x.com/EridianAlpha",
+            "emoji": "X",
+            "type": "posts",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "Reposts",
+                "emoji": "X"
+            },
+            "link": "https://x.com/EridianAlpha",
+            "emoji": "🔁",
+            "type": "reposts",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "Comments",
+                "emoji": "X"
+            },
+            "link": "https://x.com/EridianAlpha",
+            "emoji": "💬",
+            "type": "comments",
+            "data": []
+        }
+    ]
+}
