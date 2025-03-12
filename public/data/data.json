@@ -21,6 +21,7 @@
                 "text": "docs.eridian.xyz",
                 "emoji": "📖"
             },
+            "GA4_PROPERTY_ID": "481972579",
             "link": "https://docs.eridian.xyz",
             "emoji": "👀",
             "type": "views",
@@ -31,6 +32,7 @@
                 "text": "staking.directory",
                 "emoji": "📋"
             },
+            "GA4_PROPERTY_ID": "481964523",
             "link": "https://staking.directory",
             "emoji": "👀",
             "type": "views",
@@ -41,6 +43,7 @@
                 "text": "settlers.eridian.xyz",
                 "emoji": "⛺️"
             },
+            "GA4_PROPERTY_ID": "481968461",
             "link": "https://settlers.eridian.xyz",
             "emoji": "👀",
             "type": "views",
@@ -51,6 +54,7 @@
                 "text": "pool.eridian.xyz",
                 "emoji": "🏖️"
             },
+            "GA4_PROPERTY_ID": "481920581",
             "link": "https://pool.eridian.xyz",
             "emoji": "👀",
             "type": "views",
@@ -61,6 +65,7 @@
                 "text": "ssvrewards.com",
                 "emoji": "💰"
             },
+            "GA4_PROPERTY_ID": "481955132",
             "link": "https://ssvrewards.com",
             "emoji": "👀",
             "type": "views",
