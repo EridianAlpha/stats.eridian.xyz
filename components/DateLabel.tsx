@@ -4,11 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCalendarDay } from "@fortawesome/free-solid-svg-icons"
 
 interface DateLabelProps {
-    item: {
-        date: string
-        formattedDate: string
-        value: number
-    }
+    date: string
     index: number
     selectedIndex: number | null
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
@@ -17,10 +13,18 @@ interface DateLabelProps {
     setHoverIndex: Dispatch<SetStateAction<number | null>>
 }
 
-export default function DateLabel({ item, index, selectedIndex, setSelectedIndex, containerHeight, hoverIndex, setHoverIndex }: DateLabelProps) {
+export default function DateLabel({
+    date,
+    index,
+    selectedIndex,
+    setSelectedIndex,
+    containerHeight,
+    hoverIndex,
+    setHoverIndex,
+}: DateLabelProps) {
     return (
         <Box
-            key={`date-${item.date}`}
+            key={`date-${date}`}
             position="relative"
             display="flex"
             justifyContent="center"
@@ -63,7 +67,7 @@ export default function DateLabel({ item, index, selectedIndex, setSelectedIndex
                             <FontAwesomeIcon icon={faCalendarDay} />
                         </Text>
                     )}
-                    {item.formattedDate}
+                    {`${new Date(date).getDate()} ${new Date(date).toLocaleString("en-US", { month: "short" })}`}
                 </Text>
             </Box>
             {(hoverIndex == index || selectedIndex == index) && (

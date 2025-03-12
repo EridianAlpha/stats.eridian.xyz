@@ -8,7 +8,20 @@
             "link": "https://eridian.xyz",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-12",
+                    "value": 23
+                },
+                {
+                    "date": "2025-03-11",
+                    "value": 20
+                },
+                {
+                    "date": "2025-03-10",
+                    "value": 0
+                }
+            ]
         },
         {
             "title": {
@@ -86,11 +99,11 @@
     "socials": [
         {
             "title": {
-                "text": "X Posts",
-                "emoji": "📣"
+                "text": "Posts",
+                "emoji": "X"
             },
             "link": "https://x.com/EridianAlpha",
-            "emoji": "X",
+            "emoji": "📣",
             "type": "posts",
             "data": []
         },

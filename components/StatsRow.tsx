@@ -7,7 +7,7 @@ import Link from "next/link"
 import { formatNumber } from "../utils/statsUtils"
 
 interface StatsRowProps {
-    title: string
+    title: { text: string; emoji: string }
     link: string
     emoji: string
     data: { date: string; value: number }[]
@@ -54,18 +54,23 @@ export default function StatsRow({
             >
                 {link ? (
                     <HStack cursor="pointer" className="group" gap={1}>
+                        <Text pr={1}>{title.emoji}</Text>
                         <Link href={link} target="_blank">
-                            <Text _groupHover={{ textDecoration: "underline" }}>{title}</Text>
+                            <Text _groupHover={{ textDecoration: "underline" }}>{title.text}</Text>
                         </Link>
                         <Text opacity={0} _groupHover={{ opacity: 1 }}>
                             ↗
                         </Text>
                     </HStack>
                 ) : (
-                    title
+                    <Text>{title.text}</Text>
                 )}
             </Box>
-            <Tooltip.Root openDelay={100} closeDelay={100} positioning={{ placement: "top", offset: { mainAxis: 2, crossAxis: 0 } }}>
+            <Tooltip.Root
+                openDelay={100}
+                closeDelay={100}
+                positioning={{ placement: "top", offset: { mainAxis: 2, crossAxis: 0 } }}
+            >
                 <Tooltip.Trigger asChild>
                     <Box
                         fontWeight="bold"
