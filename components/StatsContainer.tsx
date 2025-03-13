@@ -4,6 +4,7 @@ import { useState, Dispatch, SetStateAction, useRef, useEffect, Fragment } from 
 import { Grid, Box, VStack, Spinner, Switch, Text } from "@chakra-ui/react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
+import { useSearchParams } from "next/navigation"
 
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
@@ -24,12 +25,16 @@ export default function StatsContainer({
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
 }) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const searchParams = useSearchParams()
 
     const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const [containerHeight, setContainerHeight] = useState(0)
     const [processedData, setProcessedData] = useState<DataStructure>(data)
     const [pageLoaded, setPageLoaded] = useState(false)
-    const [demoData, setDemoData] = useState(true)
+    const [demoData, setDemoData] = useState(() => {
+        const demoParam = searchParams.get("demo")
+        return demoParam === "false" ? false : true
+    })
 
     // Static values
     const [containerWidth] = useState(1400)
