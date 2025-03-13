@@ -6,6 +6,8 @@ import { ColorModeProvider, type ColorModeProviderProps } from "../components/co
 import { useState, useEffect } from "react"
 import { Spinner, VStack, Text } from "@chakra-ui/react"
 
+import GoogleAnalytics from "../components/GoogleAnalytics"
+
 import { customConfig } from "../styles/theme"
 
 export function Provider(props: ColorModeProviderProps) {
@@ -18,7 +20,10 @@ export function Provider(props: ColorModeProviderProps) {
     return (
         <ChakraProvider value={customConfig}>
             {hydrated ? (
-                <ColorModeProvider {...props} />
+                <>
+                    <GoogleAnalytics />
+                    <ColorModeProvider {...props} />
+                </>
             ) : (
                 <VStack minH="100vh" justifyContent={"center"} alignItems={"center"} fontWeight={"bold"}>
                     <Spinner />
