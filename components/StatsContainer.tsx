@@ -10,32 +10,10 @@ import EmptyRow from "./EmptyRow"
 import StatsRow from "./StatsRow"
 import SectionEnd from "./SectionEnd"
 
+import { DataStructure, DateRangeItem } from "../interfaces/types"
+
 import data from "../public/data/data.json"
 import { generateSampleData } from "../utils/statsUtils"
-
-type DataItem = {
-    date: string
-    value: number
-}
-
-type ConfigItem = {
-    title: {
-        text: string
-        emoji: string
-    }
-    link: string
-    emoji: string
-    type: string
-    data: DataItem[]
-}
-
-type DataStructure = {
-    [key: string]: ConfigItem[]
-}
-
-type DateRangeItem = {
-    date: string
-}
 
 const HeadingCell = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -72,11 +50,11 @@ export default function StatsContainer({
     const [containerWidth, setContainerWidth] = useState(1400)
     const [processedData, setProcessedData] = useState<DataStructure>(data)
     const [pageLoaded, setPageLoaded] = useState(false)
+    const [demoData, setDemoData] = useState(true)
 
     const labelWidth = "215px"
 
-    const [demoData, setDemoData] = useState(true)
-
+    // Generate date range
     const [dateRange] = useState<DateRangeItem[]>(() => {
         return Array.from({ length: 30 }, (_, i) => {
             const date = new Date()
@@ -87,6 +65,7 @@ export default function StatsContainer({
         })
     })
 
+    // Process data
     useEffect(() => {
         const processedDataWithDates = Object.entries(data).reduce((acc, [section, items]) => {
             acc[section] = items.map((item) => {
