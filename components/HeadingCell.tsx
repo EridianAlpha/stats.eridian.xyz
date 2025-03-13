@@ -15,8 +15,12 @@ export default function HeadingCell({ children }: { children: React.ReactNode })
             px={5}
             justifyContent="end"
             alignItems="start"
+            cursor="default"
+            mb={"-4px"}
         >
-            <Text lineHeight="1">{children}</Text>
+            <Text lineHeight="27px" bg={"pageBackground"} h={"27px"} px={2} borderRadius={"full"}>
+                {children}
+            </Text>
         </VStack>
     )
 }

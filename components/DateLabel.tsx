@@ -77,7 +77,7 @@ export default function DateLabel({
                     top="10px"
                     left="50%"
                     transform="translateX(-50%)"
-                    h={`${containerHeight - (index % 2 === 0 ? 62 : 100)}px`}
+                    h={`${containerHeight - (index % 2 === 0 ? 65 : 100)}px`}
                     w="14px"
                     zIndex={3}
                     justifyContent="space-between"
@@ -93,7 +93,11 @@ export default function DateLabel({
                 left="50%"
                 transform="translateX(-50%)"
                 w={"10px"}
-                h={`${containerHeight - (index % 2 === 0 ? 62 : 100)}px`}
+                h={
+                    hoverIndex == index || selectedIndex == index
+                        ? `${containerHeight - (index % 2 === 0 ? 65 : 100)}px`
+                        : `${index % 2 === 0 ? 70 : 30}px`
+                }
                 zIndex={5}
                 cursor={"pointer"}
                 onMouseEnter={() => setHoverIndex(index)}

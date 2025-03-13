@@ -155,11 +155,11 @@
             ]
         }
     ],
-    "socials": [
+    "socials-demo": [
         {
             "title": {
                 "text": "Posts",
-                "emoji": "X"
+                "emoji": "✖️"
             },
             "link": "https://x.com/EridianAlpha",
             "emoji": "📣",
@@ -169,7 +169,7 @@
         {
             "title": {
                 "text": "Reposts",
-                "emoji": "X"
+                "emoji": "✖️"
             },
             "link": "https://x.com/EridianAlpha",
             "emoji": "🔁",
@@ -179,11 +179,33 @@
         {
             "title": {
                 "text": "Comments",
-                "emoji": "X"
+                "emoji": "✖️"
             },
             "link": "https://x.com/EridianAlpha",
             "emoji": "💬",
             "type": "comments",
+            "data": []
+        }
+    ],
+    "contracts-demo": [
+        {
+            "title": {
+                "text": "settlers.eridian.xyz",
+                "emoji": "⛺️"
+            },
+            "link": "https://settlers.eridian.xyz",
+            "emoji": "🖼️",
+            "type": "mints",
+            "data": []
+        },
+        {
+            "title": {
+                "text": "pool.eridian.xyz",
+                "emoji": "🏖️"
+            },
+            "link": "https://pool.eridian.xyz",
+            "emoji": "🔀",
+            "type": "trades",
             "data": []
         }
     ]

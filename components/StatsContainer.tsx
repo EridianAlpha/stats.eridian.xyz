@@ -9,7 +9,6 @@ import { useSearchParams } from "next/navigation"
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
 import StatsRow from "./StatsRow"
-import SectionEnd from "./SectionEnd"
 import HeadingCell from "./HeadingCell"
 
 import { DataStructure, DateRangeItem } from "../interfaces/types"
@@ -24,13 +23,12 @@ export default function StatsContainer({
     selectedIndex: number | null
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
 }) {
-    const containerRef = useRef<HTMLDivElement>(null)
+    const gridRef = useRef<HTMLDivElement>(null)
     const searchParams = useSearchParams()
 
     const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const [containerHeight, setContainerHeight] = useState(0)
     const [processedData, setProcessedData] = useState<DataStructure>(data)
-    const [pageLoaded, setPageLoaded] = useState(false)
     const [demoData, setDemoData] = useState(() => {
         const demoParam = searchParams.get("demo")
         return demoParam === "false" ? false : true
@@ -88,9 +86,8 @@ export default function StatsContainer({
     // Update container height
     useEffect(() => {
         const updateDimensions = () => {
-            if (containerRef.current) {
-                setContainerHeight(containerRef.current.clientHeight)
-                setPageLoaded(true)
+            if (gridRef.current) {
+                setContainerHeight(gridRef.current.clientHeight)
             }
         }
 
@@ -102,153 +99,157 @@ export default function StatsContainer({
 
     return (
         <Box
-            ref={containerRef}
             bg={"contentBackground"}
             borderRadius={"20px"}
             position="relative"
             overflowX="scroll"
             maxW="100%"
             w={"100%"}
-            minH={"500px"}
+            minH={"fit-content"}
         >
-            {!pageLoaded ? (
-                <VStack justifyContent="center" alignItems="center" h={"500px"}>
-                    <Spinner />
-                </VStack>
-            ) : (
-                <Grid
-                    templateColumns={`repeat(${dateRange.length + 2}, 1fr)`}
-                    pt={3}
-                    mr={5}
-                    gap={"0px"}
-                    position="relative"
-                    w={containerWidth}
-                >
-                    {/* First row: Odd index dates */}
-                    <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} pl={5}>
-                        <Switch.Root
-                            colorPalette={"orange"}
-                            cursor={"pointer"}
-                            checked={demoData}
-                            onCheckedChange={() => setDemoData(!demoData)}
-                            bg={"pageBackground"}
-                            py={1}
-                            pl={1}
-                            pr={2}
-                            borderRadius={"full"}
-                        >
-                            <Switch.HiddenInput />
-                            <Switch.Control border={"2px solid"} h={"24px"} w={"44px"}>
-                                <Switch.Thumb bg={demoData ? "pageBackground" : "textColor"}>
-                                    <Switch.ThumbIndicator>
-                                        <FontAwesomeIcon icon={faCheck} />
-                                    </Switch.ThumbIndicator>
-                                </Switch.Thumb>
-                            </Switch.Control>
-                            <Switch.Label>
-                                <Text fontWeight={"bold"} fontSize={"md"}>
-                                    Demo Data
-                                </Text>
-                            </Switch.Label>
-                        </Switch.Root>
-                    </Box>
-                    <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
-                    {dateRange.map((item, index) =>
-                        index % 2 === 0 ? (
-                            <DateLabel
-                                key={item.date}
-                                date={item.date}
-                                index={index}
-                                selectedIndex={selectedIndex}
-                                setSelectedIndex={setSelectedIndex}
-                                containerHeight={containerHeight}
-                                hoverIndex={hoverIndex}
-                                setHoverIndex={setHoverIndex}
-                            />
-                        ) : (
-                            <Box key={`empty-${item.date}`} />
-                        ),
-                    )}
-
-                    {/* Second row: Even index dates */}
-                    <HeadingCell>
-                        {Object.keys(processedData)[0].charAt(0).toUpperCase() + Object.keys(processedData)[0].slice(1)}
-                    </HeadingCell>
-                    <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
-                    {dateRange.map((item, index) =>
-                        index % 2 !== 0 ? (
-                            <DateLabel
-                                key={`date-label-${item.date}`}
-                                date={item.date}
-                                index={index}
-                                selectedIndex={selectedIndex}
-                                setSelectedIndex={setSelectedIndex}
-                                containerHeight={containerHeight}
-                                hoverIndex={hoverIndex}
-                                setHoverIndex={setHoverIndex}
-                            />
-                        ) : (
-                            <Box key={`empty-${item.date}`} />
-                        ),
-                    )}
-
-                    {/* First Stats Rows */}
-                    {Object.values(processedData)[0].map((config, index) => (
-                        <StatsRow
-                            key={`${config.title.text}-${config.type}`}
-                            title={config.title}
-                            link={config.link}
-                            emoji={config.emoji}
-                            type={config.type}
-                            data={config.data}
-                            labelWidth={labelWidth}
-                            firstRow={index === 0}
-                            setSelectedIndex={setSelectedIndex}
-                            setHoverIndex={setHoverIndex}
+            <Grid
+                ref={gridRef}
+                templateColumns={`repeat(${dateRange.length + 2}, 1fr)`}
+                pt={3}
+                mr={5}
+                gap={"0px"}
+                position="relative"
+                w={containerWidth}
+            >
+                {/* First row: Odd index dates */}
+                <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} pl={5}>
+                    <Switch.Root
+                        colorPalette={"orange"}
+                        cursor={"pointer"}
+                        checked={demoData}
+                        onCheckedChange={() => setDemoData(!demoData)}
+                        bg={"pageBackground"}
+                        py={1}
+                        pl={1}
+                        pr={2}
+                        borderRadius={"full"}
+                    >
+                        <Switch.HiddenInput />
+                        <Switch.Control border={"2px solid"} h={"24px"} w={"44px"}>
+                            <Switch.Thumb bg={demoData ? "pageBackground" : "textColor"}>
+                                <Switch.ThumbIndicator>
+                                    <FontAwesomeIcon icon={faCheck} />
+                                </Switch.ThumbIndicator>
+                            </Switch.Thumb>
+                        </Switch.Control>
+                        <Switch.Label>
+                            <Text fontWeight={"bold"} fontSize={"md"}>
+                                Demo Data
+                            </Text>
+                        </Switch.Label>
+                    </Switch.Root>
+                </Box>
+                <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
+                {dateRange.map((item, index) =>
+                    index % 2 === 0 ? (
+                        <DateLabel
+                            key={item.date}
+                            date={item.date}
+                            index={index}
                             selectedIndex={selectedIndex}
+                            setSelectedIndex={setSelectedIndex}
+                            containerHeight={containerHeight}
                             hoverIndex={hoverIndex}
+                            setHoverIndex={setHoverIndex}
                         />
-                    ))}
+                    ) : (
+                        <Box key={`empty-${item.date}`} />
+                    ),
+                )}
 
-                    {/* Other Stats Rows */}
-                    {Object.entries(processedData)
-                        .slice(1)
-                        .map(([sectionName, section]) => (
+                {/* Second row: Even index dates */}
+                <HeadingCell>
+                    {Object.keys(processedData)[0].charAt(0).toUpperCase() + Object.keys(processedData)[0].slice(1)}
+                </HeadingCell>
+                <Box position="sticky" left={labelWidth} zIndex={2} bg={"contentBackground"} />
+                {dateRange.map((item, index) =>
+                    index % 2 !== 0 ? (
+                        <DateLabel
+                            key={`date-label-${item.date}`}
+                            date={item.date}
+                            index={index}
+                            selectedIndex={selectedIndex}
+                            setSelectedIndex={setSelectedIndex}
+                            containerHeight={containerHeight}
+                            hoverIndex={hoverIndex}
+                            setHoverIndex={setHoverIndex}
+                        />
+                    ) : (
+                        <Box key={`empty-${item.date}`} />
+                    ),
+                )}
+
+                {/* First Stats Rows */}
+                {Object.values(processedData)[0].map((config, index) => (
+                    <StatsRow
+                        key={`${config.title.text}-${config.type}`}
+                        title={config.title}
+                        link={config.link}
+                        emoji={config.emoji}
+                        type={config.type}
+                        data={config.data}
+                        labelWidth={labelWidth}
+                        firstRow={index === 0}
+                        setSelectedIndex={setSelectedIndex}
+                        setHoverIndex={setHoverIndex}
+                        selectedIndex={selectedIndex}
+                        hoverIndex={hoverIndex}
+                        isLast={false}
+                    />
+                ))}
+
+                {/* Other Stats Rows */}
+                {Object.entries(processedData)
+                    .slice(1)
+                    .filter(([sectionName]) => {
+                        const isDemoSection = sectionName.endsWith("-demo")
+                        return demoData ? true : !isDemoSection
+                    })
+                    .map(([sectionName, section], sectionIndex, sectionsArray) => {
+                        const isLastSection = sectionIndex === sectionsArray.length - 1
+                        return (
                             <Fragment key={sectionName}>
-                                <HeadingCell>{sectionName.charAt(0).toUpperCase() + sectionName.slice(1)}</HeadingCell>
+                                <HeadingCell>
+                                    {sectionName
+                                        .replace(/-demo$/, "")
+                                        .charAt(0)
+                                        .toUpperCase() + sectionName.replace(/-demo$/, "").slice(1)}
+                                </HeadingCell>
                                 <EmptyRow
                                     count={dateRange.length + 2}
                                     headingRow={true}
-                                    height="60px"
+                                    height="45px"
                                     labelWidth={labelWidth}
                                 />
-                                {section.map((config) => (
-                                    <StatsRow
-                                        key={`${config.title.text}-${config.type}`}
-                                        title={config.title}
-                                        link={config.link}
-                                        emoji={config.emoji}
-                                        type={config.type}
-                                        data={config.data}
-                                        labelWidth={labelWidth}
-                                        setSelectedIndex={setSelectedIndex}
-                                        setHoverIndex={setHoverIndex}
-                                        selectedIndex={selectedIndex}
-                                        hoverIndex={hoverIndex}
-                                    />
-                                ))}
+                                {section.map((config, index) => {
+                                    const isLastItem = isLastSection && index === section.length - 1
+                                    return (
+                                        <StatsRow
+                                            key={`${config.title.text}-${config.type}`}
+                                            title={config.title}
+                                            link={config.link}
+                                            emoji={config.emoji}
+                                            type={config.type}
+                                            data={config.data}
+                                            labelWidth={labelWidth}
+                                            setSelectedIndex={setSelectedIndex}
+                                            setHoverIndex={setHoverIndex}
+                                            selectedIndex={selectedIndex}
+                                            hoverIndex={hoverIndex}
+                                            isLast={isLastItem}
+                                        />
+                                    )
+                                })}
                             </Fragment>
-                        ))}
-
-                    <SectionEnd
-                        count={dateRange.length + 2}
-                        labelWidth={labelWidth}
-                        selectedIndex={selectedIndex}
-                        hoverIndex={hoverIndex}
-                    />
-                    <EmptyRow count={dateRange.length + 2} labelWidth={labelWidth} height="15px" />
-                </Grid>
-            )}
+                        )
+                    })}
+                <EmptyRow count={dateRange.length + 2} labelWidth={labelWidth} height="15px" />
+            </Grid>
         </Box>
     )
 }

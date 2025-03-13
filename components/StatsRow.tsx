@@ -18,6 +18,7 @@ interface StatsRowProps {
     selectedIndex: number | null
     hoverIndex: number | null
     type: string
+    isLast: boolean
 }
 
 export default function StatsRow({
@@ -32,6 +33,7 @@ export default function StatsRow({
     selectedIndex,
     hoverIndex,
     type,
+    isLast,
 }: StatsRowProps) {
     const maxValue = useMemo(() => {
         return Math.max(...data.map((item) => item.value || 0))
@@ -131,10 +133,10 @@ export default function StatsRow({
                             <Box
                                 position="absolute"
                                 left="50%"
-                                top="50%"
+                                top={`${isLast ? "35%" : "50%"}`}
                                 transform="translate(-50%, -50%)"
                                 bg={item.value === 0 ? "pageBackground" : calculatedBgColor}
-                                h="calc(100% + 4px)"
+                                h={`calc(${isLast ? "90% + 0px" : "100% + 4px"})`}
                                 w="10px"
                                 zIndex={6}
                             />
