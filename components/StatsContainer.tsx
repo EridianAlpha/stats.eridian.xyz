@@ -9,32 +9,12 @@ import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
 import StatsRow from "./StatsRow"
 import SectionEnd from "./SectionEnd"
+import HeadingCell from "./HeadingCell"
 
 import { DataStructure, DateRangeItem } from "../interfaces/types"
 
 import data from "../public/data/data.json"
 import { generateSampleData } from "../utils/statsUtils"
-
-const HeadingCell = ({ children }: { children: React.ReactNode }) => {
-    return (
-        <VStack
-            fontWeight="bold"
-            textAlign="left"
-            whiteSpace="nowrap"
-            color={"blue"}
-            fontSize={"xl"}
-            position="sticky"
-            left={0}
-            bg={"contentBackground"}
-            zIndex={10}
-            px={5}
-            justifyContent="end"
-            alignItems="start"
-        >
-            <Text lineHeight="1">{children}</Text>
-        </VStack>
-    )
-}
 
 export default function StatsContainer({
     selectedIndex,
@@ -47,12 +27,13 @@ export default function StatsContainer({
 
     const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const [containerHeight, setContainerHeight] = useState(0)
-    const [containerWidth, setContainerWidth] = useState(1400)
     const [processedData, setProcessedData] = useState<DataStructure>(data)
     const [pageLoaded, setPageLoaded] = useState(false)
     const [demoData, setDemoData] = useState(true)
 
-    const labelWidth = "215px"
+    // Static values
+    const [containerWidth] = useState(1400)
+    const [labelWidth] = useState("215px")
 
     // Generate date range
     const [dateRange] = useState<DateRangeItem[]>(() => {
