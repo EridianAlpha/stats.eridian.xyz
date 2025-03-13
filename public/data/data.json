@@ -16,7 +16,7 @@
                 },
                 {
                     "date": "2025-03-12",
-                    "value": 3
+                    "value": 6
                 }
             ]
         },
@@ -89,6 +89,10 @@
             "type": "views",
             "data": [
                 {
+                    "date": "2025-03-13",
+                    "value": 3
+                },
+                {
                     "date": "2025-03-12",
                     "value": 2
                 }
@@ -106,7 +110,24 @@
             "link": "https://github.com/EridianAlpha/eridian.xyz",
             "emoji": "💻",
             "type": "commits",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-12",
+                    "value": 1
+                },
+                {
+                    "date": "2025-03-10",
+                    "value": 4
+                },
+                {
+                    "date": "2025-03-05",
+                    "value": 1
+                },
+                {
+                    "date": "2025-02-25",
+                    "value": 1
+                }
+            ]
         },
         {
             "owner": "EridianAlpha",
@@ -118,7 +139,20 @@
             "link": "https://github.com/EridianAlpha/docs",
             "emoji": "💻",
             "type": "commits",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-12",
+                    "value": 1
+                },
+                {
+                    "date": "2025-02-22",
+                    "value": 1
+                },
+                {
+                    "date": "2025-02-21",
+                    "value": 1
+                }
+            ]
         }
     ],
     "socials": [
