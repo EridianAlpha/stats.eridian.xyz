@@ -97,6 +97,8 @@
     ],
     "repos": [
         {
+            "owner": "EridianAlpha",
+            "name": "eridian.xyz",
             "title": {
                 "text": "eridian.xyz",
                 "emoji": "💻"
@@ -107,6 +109,8 @@
             "data": []
         },
         {
+            "owner": "EridianAlpha",
+            "name": "docs",
             "title": {
                 "text": "docs.eridian.xyz",
                 "emoji": "📖"
