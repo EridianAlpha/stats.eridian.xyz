@@ -1,7 +1,9 @@
 "use client"
 
 import { useState, Dispatch, SetStateAction, useRef, useEffect, Fragment } from "react"
-import { Grid, Box, VStack, Text, Spinner } from "@chakra-ui/react"
+import { Grid, Box, VStack, Spinner, Switch, Text } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faCheck } from "@fortawesome/free-solid-svg-icons"
 
 import DateLabel from "./DateLabel"
 import EmptyRow from "./EmptyRow"
@@ -9,6 +11,7 @@ import StatsRow from "./StatsRow"
 import SectionEnd from "./SectionEnd"
 
 import data from "../public/data/data.json"
+import { generateSampleData } from "../utils/statsUtils"
 
 type DataItem = {
     date: string
@@ -50,7 +53,7 @@ const HeadingCell = ({ children }: { children: React.ReactNode }) => {
             justifyContent="end"
             alignItems="start"
         >
-            {children}
+            <Text lineHeight="1">{children}</Text>
         </VStack>
     )
 }
@@ -66,11 +69,15 @@ export default function StatsContainer({
 
     const [hoverIndex, setHoverIndex] = useState<number | null>(null)
     const [containerHeight, setContainerHeight] = useState(0)
-    const [containerWidth, setContainerWidth] = useState(0)
+    const [containerWidth, setContainerWidth] = useState(1400)
     const [processedData, setProcessedData] = useState<DataStructure>(data)
     const [pageLoaded, setPageLoaded] = useState(false)
 
-    const [dateRange, setDateRange] = useState<DateRangeItem[]>(() => {
+    const labelWidth = "215px"
+
+    const [demoData, setDemoData] = useState(true)
+
+    const [dateRange] = useState<DateRangeItem[]>(() => {
         return Array.from({ length: 30 }, (_, i) => {
             const date = new Date()
             date.setDate(date.getDate() - i)
@@ -80,22 +87,30 @@ export default function StatsContainer({
         })
     })
 
-    // Fill in missing dates with 0
     useEffect(() => {
         const processedDataWithDates = Object.entries(data).reduce((acc, [section, items]) => {
             acc[section] = items.map((item) => {
-                // Create a map of existing data for quick lookup
-                const existingDataMap = new Map(item.data.map((d) => [d.date, d.value]))
+                if (demoData) {
+                    // Generate demo data
+                    return {
+                        ...item,
+                        data: generateSampleData({ maxValue: 200 }),
+                    }
+                } else {
+                    // Fill in missing dates with 0 or set demo data
+                    // Create a map of existing data for quick lookup
+                    const existingDataMap = new Map(item.data.map((d) => [d.date, d.value]))
 
-                // Ensure all dates from dateRange are included
-                const filledData = dateRange.map(({ date }) => ({
-                    date,
-                    value: existingDataMap.get(date) ?? 0, // Use existing value or default to 0
-                }))
+                    // Ensure all dates from dateRange are included
+                    const filledData = dateRange.map(({ date }) => ({
+                        date,
+                        value: existingDataMap.get(date) ?? 0, // Use existing value or default to 0
+                    }))
 
-                return {
-                    ...item,
-                    data: filledData,
+                    return {
+                        ...item,
+                        data: filledData,
+                    }
                 }
             })
 
@@ -103,13 +118,13 @@ export default function StatsContainer({
         }, {} as DataStructure)
 
         setProcessedData(processedDataWithDates)
-    }, [data, dateRange])
+    }, [dateRange, demoData])
 
+    // Update container height
     useEffect(() => {
         const updateDimensions = () => {
             if (containerRef.current) {
                 setContainerHeight(containerRef.current.clientHeight)
-                setContainerWidth(containerRef.current.scrollWidth)
                 setPageLoaded(true)
             }
         }
@@ -119,8 +134,6 @@ export default function StatsContainer({
 
         return () => window.removeEventListener("resize", updateDimensions)
     }, [processedData])
-
-    const labelWidth = "210px"
 
     return (
         <Box
@@ -147,7 +160,33 @@ export default function StatsContainer({
                     w={containerWidth}
                 >
                     {/* First row: Odd index dates */}
-                    <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} />
+                    <Box position="sticky" left={0} zIndex={6} bg={"contentBackground"} pl={5}>
+                        <Switch.Root
+                            colorPalette={"orange"}
+                            cursor={"pointer"}
+                            checked={demoData}
+                            onCheckedChange={() => setDemoData(!demoData)}
+                            bg={"pageBackground"}
+                            py={1}
+                            pl={1}
+                            pr={2}
+                            borderRadius={"full"}
+                        >
+                            <Switch.HiddenInput />
+                            <Switch.Control border={"2px solid"} h={"24px"} w={"44px"}>
+                                <Switch.Thumb bg={demoData ? "pageBackground" : "textColor"}>
+                                    <Switch.ThumbIndicator>
+                                        <FontAwesomeIcon icon={faCheck} />
+                                    </Switch.ThumbIndicator>
+                                </Switch.Thumb>
+                            </Switch.Control>
+                            <Switch.Label>
+                                <Text fontWeight={"bold"} fontSize={"md"}>
+                                    Demo Data
+                                </Text>
+                            </Switch.Label>
+                        </Switch.Root>
+                    </Box>
                     <Box position="sticky" left={labelWidth} zIndex={3} bg={"contentBackground"} />
                     {dateRange.map((item, index) =>
                         index % 2 === 0 ? (

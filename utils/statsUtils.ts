@@ -15,7 +15,6 @@ export const generateSampleData = ({ maxValue }: { maxValue: number }) => {
 
         return {
             date: date.toISOString().split("T")[0],
-            formattedDate: `${date.getDate()} ${date.toLocaleString("en-US", { month: "short" })}`,
             value: randomValue,
         }
     })
