@@ -11,8 +11,12 @@
             "type": "views",
             "data": [
                 {
-                    "date": "2025-03-13",
+                    "date": "2025-03-14",
                     "value": 1
+                },
+                {
+                    "date": "2025-03-13",
+                    "value": 3
                 },
                 {
                     "date": "2025-03-12",
@@ -29,7 +33,12 @@
             "link": "https://stats.eridian.xyz",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-13",
+                    "value": 1
+                }
+            ]
         },
         {
             "title": {
@@ -40,7 +49,12 @@
             "link": "https://docs.eridian.xyz",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-13",
+                    "value": 10
+                }
+            ]
         },
         {
             "title": {
@@ -51,7 +65,12 @@
             "link": "https://settlers.eridian.xyz",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-12",
+                    "value": 2
+                }
+            ]
         },
         {
             "title": {
@@ -63,6 +82,10 @@
             "emoji": "👀",
             "type": "views",
             "data": [
+                {
+                    "date": "2025-03-13",
+                    "value": 1
+                },
                 {
                     "date": "2025-03-12",
                     "value": 2
@@ -100,8 +123,12 @@
             "type": "views",
             "data": [
                 {
+                    "date": "2025-03-14",
+                    "value": 1
+                },
+                {
                     "date": "2025-03-13",
-                    "value": 3
+                    "value": 8
                 },
                 {
                     "date": "2025-03-12",
@@ -122,6 +149,10 @@
             "emoji": "💻",
             "type": "commits",
             "data": [
+                {
+                    "date": "2025-03-13",
+                    "value": 2
+                },
                 {
                     "date": "2025-03-12",
                     "value": 1
@@ -151,6 +182,10 @@
             "emoji": "💻",
             "type": "commits",
             "data": [
+                {
+                    "date": "2025-03-13",
+                    "value": 1
+                },
                 {
                     "date": "2025-03-12",
                     "value": 1
