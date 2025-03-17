@@ -23,7 +23,7 @@ export default function Head() {
             <meta property="og:type" content="website" />
             <meta property="og:title" content={siteName} />
             <meta property="og:description" content={siteDescription} />
-            <meta property="og:image" content={`${baseUrl}/static/logo.svg`} />
+            <meta property="og:image" content={`${baseUrl}/static/logo.png`} />
             <meta property="og:url" content={baseUrl} />
             <meta property="og:site_name" content={siteName} />
             <meta property="og:locale" content="en_US" />
@@ -32,7 +32,7 @@ export default function Head() {
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={siteName} />
             <meta name="twitter:description" content={siteDescription} />
-            <meta name="twitter:image" content={`${baseUrl}/static/logo.svg`} />
+            <meta name="twitter:image" content={`${baseUrl}/static/logo.png`} />
 
             {/* Canonical URL */}
             <link rel="canonical" href={baseUrl} />

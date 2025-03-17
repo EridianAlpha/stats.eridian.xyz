@@ -1,13 +1,45 @@
 {
   "name": "stats.eridian.xyz",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "Eridian Stats App",
+  "author": {
+    "name": "Eridian",
+    "url": "https://eridian.xyz"
+  },
   "private": true,
+  "main": "electron/main.js",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
     "start": "next build && next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "electron-dev": "NODE_ENV=development electron .",
+    "electron": "electron .",
+    "electron-build": "electron-builder"
+  },
+  "build": {
+    "appId": "xyz.eridian.stats",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "icon": "build/icon.png"
+    },
+    "files": [
+      "electron/**/*",
+      ".next/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "public",
+      "output": "dist"
+    }
   },
   "dependencies": {
     "@chakra-ui/react": "^3.8.1",
@@ -33,6 +65,8 @@
     "@types/react-dom": "^19.0.4",
     "eslint": "^9.21.0",
     "eslint-config-next": "^15.2.0",
-    "typescript": "5.7.3"
+    "typescript": "5.7.3",
+    "electron": "^35.0.1",
+    "electron-builder": "^24.13.3"
   }
 }
