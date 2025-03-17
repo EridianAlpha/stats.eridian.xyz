@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-
 import { VStack, Box } from "@chakra-ui/react"
 
 import Header from "../components/Header"
@@ -11,18 +10,25 @@ import Footer from "../components/Footer"
 export default function ContentContainer() {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
-    // Refresh the page after one hour
-    // TODO: Implement scheduled refresh on data update
     useEffect(() => {
-        const timeoutId = setTimeout(
-            () => {
-                console.log("Refreshing page after one hour")
-                window.location.reload()
-            },
-            60 * 60 * 1000, // 1 hour in milliseconds
-        )
+        const oneHour = 60 * 60 * 1000
 
-        return () => clearTimeout(timeoutId)
+        const refreshPage = () => {
+            console.log("Refreshing page after one hour")
+            window.location.reload()
+        }
+
+        // Force refresh every hour, even in background
+        const intervalId = setInterval(refreshPage, oneHour)
+
+        // Refresh on focus if missed
+        const onFocus = () => refreshPage()
+        window.addEventListener("focus", onFocus)
+
+        return () => {
+            clearInterval(intervalId)
+            window.removeEventListener("focus", onFocus)
+        }
     }, [])
 
     return (
