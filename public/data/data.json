@@ -12,11 +12,11 @@
             "data": [
                 {
                     "date": "2025-03-20",
-                    "value": 1
+                    "value": 2
                 },
                 {
                     "date": "2025-03-19",
-                    "value": 1
+                    "value": 2
                 },
                 {
                     "date": "2025-03-18",
@@ -96,7 +96,7 @@
             "data": [
                 {
                     "date": "2025-03-20",
-                    "value": 3
+                    "value": 4
                 },
                 {
                     "date": "2025-03-18",
@@ -179,12 +179,16 @@
             "type": "views",
             "data": [
                 {
+                    "date": "2025-03-21",
+                    "value": 3
+                },
+                {
                     "date": "2025-03-20",
-                    "value": 4
+                    "value": 11
                 },
                 {
                     "date": "2025-03-19",
-                    "value": 2
+                    "value": 3
                 },
                 {
                     "date": "2025-03-18",
@@ -273,7 +277,12 @@
             "link": "https://airdrip.club",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-03-20",
+                    "value": 2
+                }
+            ]
         }
     ],
     "repos": [
@@ -288,6 +297,10 @@
             "emoji": "💻",
             "type": "commits",
             "data": [
+                {
+                    "date": "2025-03-20",
+                    "value": 1
+                },
                 {
                     "date": "2025-03-17",
                     "value": 1
