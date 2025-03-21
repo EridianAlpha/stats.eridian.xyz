@@ -126,50 +126,6 @@
         },
         {
             "title": {
-                "text": "settlers.eridian.xyz",
-                "emoji": "⛺️"
-            },
-            "GA4_PROPERTY_ID": "481968461",
-            "link": "https://settlers.eridian.xyz",
-            "emoji": "👀",
-            "type": "views",
-            "data": [
-                {
-                    "date": "2025-03-14",
-                    "value": 1
-                },
-                {
-                    "date": "2025-03-12",
-                    "value": 2
-                }
-            ]
-        },
-        {
-            "title": {
-                "text": "pool.eridian.xyz",
-                "emoji": "🏖️"
-            },
-            "GA4_PROPERTY_ID": "481920581",
-            "link": "https://pool.eridian.xyz",
-            "emoji": "👀",
-            "type": "views",
-            "data": [
-                {
-                    "date": "2025-03-14",
-                    "value": 1
-                },
-                {
-                    "date": "2025-03-13",
-                    "value": 1
-                },
-                {
-                    "date": "2025-03-12",
-                    "value": 2
-                }
-            ]
-        },
-        {
-            "title": {
                 "text": "staking.directory",
                 "emoji": "📋"
             },
