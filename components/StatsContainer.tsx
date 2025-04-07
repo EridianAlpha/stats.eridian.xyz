@@ -31,7 +31,7 @@ export default function StatsContainer({
     const [processedData, setProcessedData] = useState<DataStructure>(data)
     const [demoData, setDemoData] = useState(() => {
         const demoParam = searchParams.get("demo")
-        return demoParam === "false" ? false : true
+        return demoParam === "true" ? true : false
     })
 
     // Static values
