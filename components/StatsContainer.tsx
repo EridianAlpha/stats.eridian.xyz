@@ -19,9 +19,11 @@ import { generateSampleData } from "../utils/statsUtils"
 export default function StatsContainer({
     selectedIndex,
     setSelectedIndex,
+    embedded = false,
 }: {
     selectedIndex: number | null
     setSelectedIndex: Dispatch<SetStateAction<number | null>>
+    embedded?: boolean
 }) {
     const gridRef = useRef<HTMLDivElement>(null)
     const searchParams = useSearchParams()
@@ -100,7 +102,7 @@ export default function StatsContainer({
     return (
         <Box
             bg={"contentBackground"}
-            borderRadius={"20px"}
+            borderRadius={embedded ? "0px" : "20px"}
             position="relative"
             overflowX="scroll"
             maxW="100%"

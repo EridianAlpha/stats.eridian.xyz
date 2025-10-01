@@ -22,17 +22,20 @@
     "appId": "xyz.eridian.stats",
     "mac": {
       "category": "public.app-category.utilities",
-      "icon": "build/icon.icns"
+      "icon": "public/static/icon.icns",
+      "identity": null
     },
     "win": {
-      "icon": "build/icon.ico"
+      "icon": "public/static/icon.ico"
     },
     "linux": {
-      "icon": "build/icon.png"
+      "icon": "public/static/icon.png"
     },
+    "npmRebuild": false,
+    "asar": true,
     "files": [
       "electron/**/*",
-      ".next/**/*",
+      "out/**/*",
       "public/**/*",
       "package.json"
     ],

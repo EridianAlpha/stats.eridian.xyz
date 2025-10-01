@@ -13,7 +13,9 @@ function createWindow() {
         },
     })
 
-    mainWindow.loadURL(process.env.ELECTRON_SITE_URL)
+    mainWindow.loadURL(
+        process.env.ELECTRON_SITE_URL ? process.env.ELECTRON_SITE_URL : "https://stats.eridian.xyz/embed?demo=false",
+    )
 
     // Open DevTools in development
     if (process.env.NODE_ENV === "development") {
