@@ -2843,7 +2843,7 @@
         {
             "title": {
                 "text": "highsignal.xyz",
-                "emoji": "⬆️"
+                "emoji": "💯"
             },
             "GA4_PROPERTY_ID": "482811421",
             "link": "https://highsignal.xyz",
@@ -3371,6 +3371,17 @@
                     "value": 5
                 }
             ]
+        },
+        {
+            "title": {
+                "text": "app.highsignal.xyz",
+                "emoji": "💯"
+            },
+            "GA4_PROPERTY_ID": "507099130",
+            "link": "https://app.highsignal.xyz",
+            "emoji": "👀",
+            "type": "views",
+            "data": []
         }
     ],
     "repos": [
