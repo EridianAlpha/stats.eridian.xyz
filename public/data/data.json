@@ -12,7 +12,7 @@
             "data": [
                 {
                     "date": "2025-09-30",
-                    "value": 5
+                    "value": 6
                 },
                 {
                     "date": "2025-09-29",
@@ -1251,6 +1251,10 @@
             "type": "views",
             "data": [
                 {
+                    "date": "2025-10-02",
+                    "value": 1
+                },
+                {
                     "date": "2025-10-01",
                     "value": 4
                 },
@@ -2039,8 +2043,12 @@
             "type": "views",
             "data": [
                 {
+                    "date": "2025-10-02",
+                    "value": 1
+                },
+                {
                     "date": "2025-10-01",
-                    "value": 14
+                    "value": 28
                 },
                 {
                     "date": "2025-09-30",
@@ -3389,7 +3397,16 @@
             "link": "https://app.highsignal.xyz",
             "emoji": "👀",
             "type": "views",
-            "data": []
+            "data": [
+                {
+                    "date": "2025-10-02",
+                    "value": 14
+                },
+                {
+                    "date": "2025-10-01",
+                    "value": 97
+                }
+            ]
         }
     ],
     "repos": [
